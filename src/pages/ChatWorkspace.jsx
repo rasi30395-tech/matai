@@ -1607,6 +1607,7 @@ const ChatWorkspace = () => {
             </div>
           </motion.section>
         )}
+      </AnimatePresence>
 
 
     </div>
