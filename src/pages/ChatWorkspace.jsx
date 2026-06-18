@@ -1026,42 +1026,68 @@ const ChatWorkspace = () => {
                           onSubmit={handleSend}
                           className="w-full mb-8"
                         >
-                          <div className="relative flex items-center gap-2 px-3 py-2 bg-background-secondary border-2 border-border-custom rounded-2xl shadow-sm focus-within:border-[var(--accent)]">
+                          <div className="flex items-center gap-2 bg-background-secondary rounded-2xl px-3 py-3 shadow-lg border border-border-custom w-full">
+                            {/* Left Plus Icon */}
                             <button
                               type="button"
                               onClick={handleFileClick}
-                              className="p-2 rounded-xl text-text-secondary hover:text-text-primary transition-all cursor-pointer"
+                              className="p-2 text-text-secondary hover:text-text-primary transition-all cursor-pointer flex-shrink-0"
                             >
-                              <Paperclip size={18} />
+                              <Plus size={22} />
                             </button>
-                            <button
-                              type="button"
-                              onClick={handleVoiceClick}
-                              className="p-2 rounded-xl text-text-secondary hover:text-text-primary transition-all cursor-pointer"
-                            >
-                              <Mic size={18} />
-                            </button>
+
+                            {/* File Preview (if any) */}
+                            {selectedFile && (
+                              <div className="flex items-center gap-2 bg-background-primary rounded-xl px-3 py-1.5 flex-shrink-0">
+                                <File size={14} className="text-text-secondary" />
+                                <span className="text-xs text-text-secondary truncate max-w-[150px]">{selectedFile.name}</span>
+                                <button
+                                  type="button"
+                                  onClick={() => setSelectedFile(null)}
+                                  className="text-text-secondary hover:text-text-primary"
+                                >
+                                  <X size={14} />
+                                </button>
+                              </div>
+                            )}
+
+                            {/* Main Input */}
                             <input
                               type="text"
-                              placeholder={t('askPlaceholder')}
+                              placeholder="Ask anything"
                               value={input}
                               onChange={(e) => setInput(e.target.value)}
                               disabled={loading}
                               autoFocus
-                              className="flex-grow bg-transparent border-none text-sm focus:outline-none placeholder:text-text-secondary/60"
+                              className="flex-1 bg-transparent border-none text-base focus:outline-none placeholder:text-text-secondary/50"
                             />
-                            {selectedFile && (
-                              <div className="text-xs text-text-secondary px-2 py-1 bg-background-primary rounded-lg">
-                                {selectedFile.name}
-                              </div>
-                            )}
+
+                            {/* Mic Button */}
+                            <button
+                              type="button"
+                              onClick={handleVoiceClick}
+                              className="p-2 text-text-secondary hover:text-text-primary transition-all cursor-pointer flex-shrink-0"
+                            >
+                              <Mic size={20} />
+                            </button>
+
+                            {/* Right Circular Send Button */}
                             <button
                               type="submit"
                               disabled={loading || !input.trim()}
-                              className="p-2.5 rounded-xl transition-all disabled:opacity-50 cursor-pointer"
+                              className="p-2.5 rounded-full transition-all disabled:opacity-50 cursor-pointer flex-shrink-0"
                               style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}
                             >
-                              <ArrowRight size={18} />
+                              {loading ? (
+                                <motion.div
+                                  animate={{ rotate: 360 }}
+                                  transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+                                >
+                                  <Loader2 size={18} />
+                                </motion.div>
+                              ) : (
+                                <ArrowRight size={18} />
+                              )}
                             </button>
                           </div>
                           <input
@@ -1085,64 +1111,69 @@ const ChatWorkspace = () => {
                         onChange={handleFileChange}
                         className="hidden"
                       />
-                      <div className="max-w-2xl mx-auto flex items-end gap-2 bg-background-secondary rounded-3xl px-3 py-2.5 shadow-md border border-border-custom w-full">
+                      <div className="max-w-2xl mx-auto flex items-center gap-2 bg-background-secondary rounded-2xl px-3 py-3 shadow-lg border border-border-custom w-full">
+                        {/* Left Plus Icon */}
                         <button
                           type="button"
                           onClick={handleFileClick}
-                          className="p-2 rounded-full text-text-secondary hover:text-text-primary transition-all cursor-pointer flex-shrink-0"
+                          className="p-2 text-text-secondary hover:text-text-primary transition-all cursor-pointer flex-shrink-0"
                         >
-                          <Plus size={20} />
+                          <Plus size={22} />
                         </button>
-                        <div className="flex-1 min-w-0">
-                          {selectedFile && (
-                            <div className="text-xs text-text-secondary px-2 py-1 bg-background-primary rounded-lg mb-1 flex items-center gap-1">
-                              <File size={12} />
-                              {selectedFile.name}
-                              <button
-                                type="button"
-                                onClick={() => setSelectedFile(null)}
-                                className="ml-auto text-text-secondary hover:text-text-primary"
-                              >
-                                <X size={12} />
-                              </button>
-                            </div>
+
+                        {/* File Preview (if any) */}
+                        {selectedFile && (
+                          <div className="flex items-center gap-2 bg-background-primary rounded-xl px-3 py-1.5 flex-shrink-0">
+                            <File size={14} className="text-text-secondary" />
+                            <span className="text-xs text-text-secondary truncate max-w-[150px]">{selectedFile.name}</span>
+                            <button
+                              type="button"
+                              onClick={() => setSelectedFile(null)}
+                              className="text-text-secondary hover:text-text-primary"
+                            >
+                              <X size={14} />
+                            </button>
+                          </div>
+                        )}
+
+                        {/* Main Input */}
+                        <input
+                          type="text"
+                          placeholder="Ask anything"
+                          value={input}
+                          onChange={(e) => setInput(e.target.value)}
+                          disabled={loading}
+                          autoFocus
+                          className="flex-1 bg-transparent border-none text-base focus:outline-none placeholder:text-text-secondary/50"
+                        />
+
+                        {/* Mic Button */}
+                        <button
+                          type="button"
+                          onClick={handleVoiceClick}
+                          className="p-2 text-text-secondary hover:text-text-primary transition-all cursor-pointer flex-shrink-0"
+                        >
+                          <Mic size={20} />
+                        </button>
+
+                        {/* Right Circular Send Button */}
+                        <button
+                          type="submit"
+                          disabled={loading || !input.trim()}
+                          className="p-2.5 rounded-full transition-all disabled:opacity-50 cursor-pointer flex-shrink-0"
+                          style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}
+                        >
+                          {loading ? (
+                            <motion.div
+                              animate={{ rotate: 360 }}
+                              transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+                            >
+                              <Loader2 size={18} />
+                            </motion.div>
+                          ) : (
+                            <ArrowRight size={18} />
                           )}
-                          <input
-                            type="text"
-                            placeholder="Ask a math problem"
-                            value={input}
-                            onChange={(e) => setInput(e.target.value)}
-                            disabled={loading}
-                            autoFocus
-                            className="w-full bg-transparent border-none text-sm focus:outline-none placeholder:text-text-secondary/60 resize-none"
-                          />
-                        </div>
-                        <div className="flex items-center gap-1 flex-shrink-0">
-                          <button
-                            type="button"
-                            onClick={handleVoiceClick}
-                            className="p-2 rounded-full text-text-secondary hover:text-text-primary transition-all cursor-pointer"
-                          >
-                            <Mic size={18} />
-                          </button>
-                          <button
-                            type="submit"
-                            disabled={loading || !input.trim()}
-                            className="p-2 rounded-full transition-all disabled:opacity-50 cursor-pointer"
-                            style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}
-                          >
-                            {loading ? (
-                              <motion.div
-                                animate={{ rotate: 360 }}
-                                transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
-                              >
-                                <Loader2 size={18} />
-                              </motion.div>
-                            ) : (
-                              <ArrowRight size={18} />
-                            )}
-                          </button>
-                        </div>
+                        </button>
                       </div>
                     </form>
                   </motion.div>
@@ -1243,48 +1274,76 @@ const ChatWorkspace = () => {
 
                     {/* Desktop Bottom Sticky Input */}
                     <div className="hidden md:block sticky bottom-0 z-20 bg-background-primary border-t border-border-custom p-3 md:p-5">
-                      <form onSubmit={handleSend} className="flex gap-2 md:gap-3 items-center max-w-4xl mx-auto px-1">
+                      <form onSubmit={handleSend} className="max-w-4xl mx-auto px-1">
                         <input
                           type="file"
                           ref={fileInputRef}
                           onChange={handleFileChange}
                           className="hidden"
                         />
-                        <button
-                          type="button"
-                          onClick={handleFileClick}
-                          className="p-2 rounded-xl text-text-secondary hover:text-text-primary transition-all cursor-pointer"
-                        >
-                          <Paperclip size={20} />
-                        </button>
-                        <button
-                          type="button"
-                          onClick={handleVoiceClick}
-                          className="p-2 rounded-xl text-text-secondary hover:text-text-primary transition-all cursor-pointer"
-                        >
-                          <Mic size={20} />
-                        </button>
-                        <input
-                          type="text"
-                          placeholder={t('askPlaceholder')}
-                          value={input}
-                          onChange={(e) => setInput(e.target.value)}
-                          disabled={loading}
-                          className="flex-grow px-3 md:px-5 py-2.5 md:py-3 rounded-2xl border border-border-custom bg-background-primary text-sm focus:outline-none focus:border-[var(--accent)] transition-all placeholder:text-text-secondary/60"
-                        />
-                        {selectedFile && (
-                          <div className="text-xs text-text-secondary px-2 py-1 bg-background-primary rounded-lg border border-border-custom">
-                            {selectedFile.name}
-                          </div>
-                        )}
-                        <button
-                          type="submit"
-                          disabled={loading || !input.trim()}
-                          className="p-2.5 md:p-3 rounded-xl transition-all disabled:opacity-50 cursor-pointer"
-                          style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}
-                        >
-                          <ArrowRight size={18} />
-                        </button>
+                        <div className="flex items-center gap-2 bg-background-secondary rounded-2xl px-3 py-3 shadow-lg border border-border-custom w-full">
+                          {/* Left Plus Icon */}
+                          <button
+                            type="button"
+                            onClick={handleFileClick}
+                            className="p-2 text-text-secondary hover:text-text-primary transition-all cursor-pointer flex-shrink-0"
+                          >
+                            <Plus size={22} />
+                          </button>
+
+                          {/* File Preview (if any) */}
+                          {selectedFile && (
+                            <div className="flex items-center gap-2 bg-background-primary rounded-xl px-3 py-1.5 flex-shrink-0">
+                              <File size={14} className="text-text-secondary" />
+                              <span className="text-xs text-text-secondary truncate max-w-[150px]">{selectedFile.name}</span>
+                              <button
+                                type="button"
+                                onClick={() => setSelectedFile(null)}
+                                className="text-text-secondary hover:text-text-primary"
+                              >
+                                <X size={14} />
+                              </button>
+                            </div>
+                          )}
+
+                          {/* Main Input */}
+                          <input
+                            type="text"
+                            placeholder="Ask anything"
+                            value={input}
+                            onChange={(e) => setInput(e.target.value)}
+                            disabled={loading}
+                            className="flex-1 bg-transparent border-none text-base focus:outline-none placeholder:text-text-secondary/50"
+                          />
+
+                          {/* Mic Button */}
+                          <button
+                            type="button"
+                            onClick={handleVoiceClick}
+                            className="p-2 text-text-secondary hover:text-text-primary transition-all cursor-pointer flex-shrink-0"
+                          >
+                            <Mic size={20} />
+                          </button>
+
+                          {/* Right Circular Send Button */}
+                          <button
+                            type="submit"
+                            disabled={loading || !input.trim()}
+                            className="p-2.5 rounded-full transition-all disabled:opacity-50 cursor-pointer flex-shrink-0"
+                            style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}
+                          >
+                            {loading ? (
+                              <motion.div
+                                animate={{ rotate: 360 }}
+                                transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+                              >
+                                <Loader2 size={18} />
+                              </motion.div>
+                            ) : (
+                              <ArrowRight size={18} />
+                            )}
+                          </button>
+                        </div>
                       </form>
                       <div className="flex flex-wrap gap-1.5 md:gap-2 justify-center mt-3 px-2">
                         {quickChips.map((chip, idx) => (
@@ -1304,63 +1363,68 @@ const ChatWorkspace = () => {
                       onSubmit={handleSend}
                       className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-background-primary/80 backdrop-blur-md border-t border-border-custom p-3 pb-[calc(12px+env(safe-area-inset-bottom))]"
                     >
-                      <div className="max-w-2xl mx-auto flex items-end gap-2 bg-background-secondary rounded-3xl px-3 py-2.5 shadow-md border border-border-custom w-full">
+                      <div className="max-w-2xl mx-auto flex items-center gap-2 bg-background-secondary rounded-2xl px-3 py-3 shadow-lg border border-border-custom w-full">
+                        {/* Left Plus Icon */}
                         <button
                           type="button"
                           onClick={handleFileClick}
-                          className="p-2 rounded-full text-text-secondary hover:text-text-primary transition-all cursor-pointer flex-shrink-0"
+                          className="p-2 text-text-secondary hover:text-text-primary transition-all cursor-pointer flex-shrink-0"
                         >
-                          <Plus size={20} />
+                          <Plus size={22} />
                         </button>
-                        <div className="flex-1 min-w-0">
-                          {selectedFile && (
-                            <div className="text-xs text-text-secondary px-2 py-1 bg-background-primary rounded-lg mb-1 flex items-center gap-1">
-                              <File size={12} />
-                              {selectedFile.name}
-                              <button
-                                type="button"
-                                onClick={() => setSelectedFile(null)}
-                                className="ml-auto text-text-secondary hover:text-text-primary"
-                              >
-                                <X size={12} />
-                              </button>
-                            </div>
+
+                        {/* File Preview (if any) */}
+                        {selectedFile && (
+                          <div className="flex items-center gap-2 bg-background-primary rounded-xl px-3 py-1.5 flex-shrink-0">
+                            <File size={14} className="text-text-secondary" />
+                            <span className="text-xs text-text-secondary truncate max-w-[150px]">{selectedFile.name}</span>
+                            <button
+                              type="button"
+                              onClick={() => setSelectedFile(null)}
+                              className="text-text-secondary hover:text-text-primary"
+                            >
+                              <X size={14} />
+                            </button>
+                          </div>
+                        )}
+
+                        {/* Main Input */}
+                        <input
+                          type="text"
+                          placeholder="Ask anything"
+                          value={input}
+                          onChange={(e) => setInput(e.target.value)}
+                          disabled={loading}
+                          className="flex-1 bg-transparent border-none text-base focus:outline-none placeholder:text-text-secondary/50"
+                        />
+
+                        {/* Mic Button */}
+                        <button
+                          type="button"
+                          onClick={handleVoiceClick}
+                          className="p-2 text-text-secondary hover:text-text-primary transition-all cursor-pointer flex-shrink-0"
+                        >
+                          <Mic size={20} />
+                        </button>
+
+                        {/* Right Circular Send Button */}
+                        <button
+                          type="submit"
+                          disabled={loading || !input.trim()}
+                          className="p-2.5 rounded-full transition-all disabled:opacity-50 cursor-pointer flex-shrink-0"
+                          style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}
+                        >
+                          {loading ? (
+                            <motion.div
+                              animate={{ rotate: 360 }}
+                              transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+                            >
+                              <Loader2 size={18} />
+                            </motion.div>
+                          ) : (
+                            <ArrowRight size={18} />
                           )}
-                          <input
-                            type="text"
-                            placeholder="Ask a math problem"
-                            value={input}
-                            onChange={(e) => setInput(e.target.value)}
-                            disabled={loading}
-                            className="w-full bg-transparent border-none text-sm focus:outline-none placeholder:text-text-secondary/60 resize-none"
-                          />
-                        </div>
-                        <div className="flex items-center gap-1 flex-shrink-0">
-                          <button
-                            type="button"
-                            onClick={handleVoiceClick}
-                            className="p-2 rounded-full text-text-secondary hover:text-text-primary transition-all cursor-pointer"
-                          >
-                            <Mic size={18} />
-                          </button>
-                          <button
-                            type="submit"
-                            disabled={loading || !input.trim()}
-                            className="p-2 rounded-full transition-all disabled:opacity-50 cursor-pointer"
-                            style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}
-                          >
-                            {loading ? (
-                              <motion.div
-                                animate={{ rotate: 360 }}
-                                transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
-                              >
-                                <Loader2 size={18} />
-                              </motion.div>
-                            ) : (
-                              <ArrowRight size={18} />
-                            )}
-                          </button>
-                        </div>
+                        </button>
                       </div>
                     </form>
                   </motion.div>
