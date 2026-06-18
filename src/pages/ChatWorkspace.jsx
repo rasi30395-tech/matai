@@ -559,7 +559,7 @@ const ChatWorkspace = () => {
     { label: 'formula sheet', icon: FileText },
   ];
 
-  const quickChips = ['Solve x² - 5x + 6 = 0', 'Differentiate x³ + 2x²', 'Integrate sin(x)', 'Plot cos(x)', 'Eigenvalues', 'Taylor series of e^x'];
+  const quickChips = ['Solve x² - 5x + 6 = 0', 'Differentiate x³ + 2x²'];
 
   const mockSteps = currentSolutionHtml ? [
     { title: 'Step 1: Identify Expression', body: `Analyzing the input query: ${currentQuery}` },
@@ -1113,7 +1113,7 @@ const ChatWorkspace = () => {
                         </button>
                       </form>
                       <div className="flex flex-wrap gap-1.5 md:gap-2 justify-center mt-3 px-2">
-                        {quickChips.slice(0, 4).map((chip, idx) => (
+                        {quickChips.map((chip, idx) => (
                           <button
                             key={idx}
                             onClick={() => setInput(chip + " ")}
