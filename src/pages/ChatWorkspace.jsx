@@ -942,11 +942,11 @@ const ChatWorkspace = () => {
           </div>
         </header>
 
-        <div className="flex-1 flex flex-col overflow-hidden">
+        <div className="flex-1 flex flex-col min-h-0">
           
           {/* A. CHAT VIEW - REDESIGNED */}
           {activeView === 'chat' && (
-            <div className="h-full flex flex-col relative">
+            <div className="flex-1 flex flex-col min-h-0 relative">
               <AnimatePresence mode="wait">
                 {messages.length === 0 ? (
                   <motion.div
@@ -955,9 +955,9 @@ const ChatWorkspace = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ duration: 0.4, ease: "easeOut" }}
-                    className="flex-1 flex flex-col md:items-center md:justify-center"
+                    className="flex-1 flex flex-col md:items-center md:justify-center min-h-0"
                   >
-                    <div className="flex-1 md:flex-none md:w-full flex flex-col items-center justify-center px-4 md:px-8 pb-20 md:pb-0">
+                    <div className="flex-1 md:flex-none md:w-full flex flex-col items-center justify-center px-4 md:px-8 pb-20 md:pb-0 overflow-y-auto scrollbar-thin">
                       {/* Logo */}
                       <div className="mb-6">
                         <div
@@ -1133,7 +1133,7 @@ const ChatWorkspace = () => {
                     className="flex-1 flex flex-col"
                   >
                     {/* Message List (Add padding bottom for mobile fixed input) */}
-                    <div className="flex-1 overflow-y-auto px-6 py-6 space-y-6 scrollbar-thin pb-20 md:pb-24">
+                    <div className="flex-1 overflow-y-auto px-6 py-6 space-y-6 scrollbar-thin pb-20 md:pb-24 min-h-0">
                       {messages.map((msg) => (
                         <motion.div
                           key={msg.id}
