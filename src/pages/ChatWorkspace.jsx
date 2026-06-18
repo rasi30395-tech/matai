@@ -8,7 +8,8 @@ import {
   Check, ArrowRight, Activity, Flame, Zap, AlertCircle, Shield, Trash2, 
   Play, Pause, Download, Sparkles, TrendingUp, Sliders, Search, User, 
   Bell, Lock, Database, Copy, RotateCcw, Maximize2, Volume2, Globe, EyeOff,
-  Info, FileText, Dumbbell, Languages, Menu, PanelRight, X, Mic, Paperclip
+  Info, FileText, Dumbbell, Languages, Menu, PanelRight, X, Mic, Paperclip,
+  File, Loader2
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -1084,43 +1085,64 @@ const ChatWorkspace = () => {
                         onChange={handleFileChange}
                         className="hidden"
                       />
-                      <div className="max-w-2xl mx-auto flex items-center gap-2 bg-background-secondary rounded-full px-4 py-3 shadow-sm">
+                      <div className="max-w-2xl mx-auto flex items-end gap-2 bg-background-secondary rounded-3xl px-3 py-2.5 shadow-md border border-border-custom w-full">
                         <button
                           type="button"
                           onClick={handleFileClick}
-                          className="p-2 rounded-full text-text-secondary hover:text-text-primary transition-all cursor-pointer"
+                          className="p-2 rounded-full text-text-secondary hover:text-text-primary transition-all cursor-pointer flex-shrink-0"
                         >
-                          <Paperclip size={18} />
+                          <Plus size={20} />
                         </button>
-                        <button
-                          type="button"
-                          onClick={handleVoiceClick}
-                          className="p-2 rounded-full text-text-secondary hover:text-text-primary transition-all cursor-pointer"
-                        >
-                          <Mic size={18} />
-                        </button>
-                        <input
-                          type="text"
-                          placeholder="Ask a math problem"
-                          value={input}
-                          onChange={(e) => setInput(e.target.value)}
-                          disabled={loading}
-                          autoFocus
-                          className="flex-grow bg-transparent border-none text-sm focus:outline-none placeholder:text-text-secondary/60"
-                        />
-                        {selectedFile && (
-                          <div className="text-xs text-text-secondary px-2 py-1 bg-background-primary rounded-lg">
-                            {selectedFile.name}
-                          </div>
-                        )}
-                        <button
-                          type="submit"
-                          disabled={loading || !input.trim()}
-                          className="p-2 rounded-full transition-all disabled:opacity-50 cursor-pointer"
-                          style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}
-                        >
-                          <ArrowRight size={18} />
-                        </button>
+                        <div className="flex-1 min-w-0">
+                          {selectedFile && (
+                            <div className="text-xs text-text-secondary px-2 py-1 bg-background-primary rounded-lg mb-1 flex items-center gap-1">
+                              <File size={12} />
+                              {selectedFile.name}
+                              <button
+                                type="button"
+                                onClick={() => setSelectedFile(null)}
+                                className="ml-auto text-text-secondary hover:text-text-primary"
+                              >
+                                <X size={12} />
+                              </button>
+                            </div>
+                          )}
+                          <input
+                            type="text"
+                            placeholder="Ask a math problem"
+                            value={input}
+                            onChange={(e) => setInput(e.target.value)}
+                            disabled={loading}
+                            autoFocus
+                            className="w-full bg-transparent border-none text-sm focus:outline-none placeholder:text-text-secondary/60 resize-none"
+                          />
+                        </div>
+                        <div className="flex items-center gap-1 flex-shrink-0">
+                          <button
+                            type="button"
+                            onClick={handleVoiceClick}
+                            className="p-2 rounded-full text-text-secondary hover:text-text-primary transition-all cursor-pointer"
+                          >
+                            <Mic size={18} />
+                          </button>
+                          <button
+                            type="submit"
+                            disabled={loading || !input.trim()}
+                            className="p-2 rounded-full transition-all disabled:opacity-50 cursor-pointer"
+                            style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}
+                          >
+                            {loading ? (
+                              <motion.div
+                                animate={{ rotate: 360 }}
+                                transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+                              >
+                                <Loader2 size={18} />
+                              </motion.div>
+                            ) : (
+                              <ArrowRight size={18} />
+                            )}
+                          </button>
+                        </div>
                       </div>
                     </form>
                   </motion.div>
@@ -1282,42 +1304,63 @@ const ChatWorkspace = () => {
                       onSubmit={handleSend}
                       className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-background-primary/80 backdrop-blur-md border-t border-border-custom p-3 pb-[calc(12px+env(safe-area-inset-bottom))]"
                     >
-                      <div className="max-w-2xl mx-auto flex items-center gap-2 bg-background-secondary rounded-full px-4 py-3 shadow-sm">
+                      <div className="max-w-2xl mx-auto flex items-end gap-2 bg-background-secondary rounded-3xl px-3 py-2.5 shadow-md border border-border-custom w-full">
                         <button
                           type="button"
                           onClick={handleFileClick}
-                          className="p-2 rounded-full text-text-secondary hover:text-text-primary transition-all cursor-pointer"
+                          className="p-2 rounded-full text-text-secondary hover:text-text-primary transition-all cursor-pointer flex-shrink-0"
                         >
-                          <Paperclip size={18} />
+                          <Plus size={20} />
                         </button>
-                        <button
-                          type="button"
-                          onClick={handleVoiceClick}
-                          className="p-2 rounded-full text-text-secondary hover:text-text-primary transition-all cursor-pointer"
-                        >
-                          <Mic size={18} />
-                        </button>
-                        <input
-                          type="text"
-                          placeholder="Ask a math problem"
-                          value={input}
-                          onChange={(e) => setInput(e.target.value)}
-                          disabled={loading}
-                          className="flex-grow bg-transparent border-none text-sm focus:outline-none placeholder:text-text-secondary/60"
-                        />
-                        {selectedFile && (
-                          <div className="text-xs text-text-secondary px-2 py-1 bg-background-primary rounded-lg">
-                            {selectedFile.name}
-                          </div>
-                        )}
-                        <button
-                          type="submit"
-                          disabled={loading || !input.trim()}
-                          className="p-2 rounded-full transition-all disabled:opacity-50 cursor-pointer"
-                          style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}
-                        >
-                          <ArrowRight size={18} />
-                        </button>
+                        <div className="flex-1 min-w-0">
+                          {selectedFile && (
+                            <div className="text-xs text-text-secondary px-2 py-1 bg-background-primary rounded-lg mb-1 flex items-center gap-1">
+                              <File size={12} />
+                              {selectedFile.name}
+                              <button
+                                type="button"
+                                onClick={() => setSelectedFile(null)}
+                                className="ml-auto text-text-secondary hover:text-text-primary"
+                              >
+                                <X size={12} />
+                              </button>
+                            </div>
+                          )}
+                          <input
+                            type="text"
+                            placeholder="Ask a math problem"
+                            value={input}
+                            onChange={(e) => setInput(e.target.value)}
+                            disabled={loading}
+                            className="w-full bg-transparent border-none text-sm focus:outline-none placeholder:text-text-secondary/60 resize-none"
+                          />
+                        </div>
+                        <div className="flex items-center gap-1 flex-shrink-0">
+                          <button
+                            type="button"
+                            onClick={handleVoiceClick}
+                            className="p-2 rounded-full text-text-secondary hover:text-text-primary transition-all cursor-pointer"
+                          >
+                            <Mic size={18} />
+                          </button>
+                          <button
+                            type="submit"
+                            disabled={loading || !input.trim()}
+                            className="p-2 rounded-full transition-all disabled:opacity-50 cursor-pointer"
+                            style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}
+                          >
+                            {loading ? (
+                              <motion.div
+                                animate={{ rotate: 360 }}
+                                transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+                              >
+                                <Loader2 size={18} />
+                              </motion.div>
+                            ) : (
+                              <ArrowRight size={18} />
+                            )}
+                          </button>
+                        </div>
                       </div>
                     </form>
                   </motion.div>
