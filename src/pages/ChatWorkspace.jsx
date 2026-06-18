@@ -915,7 +915,7 @@ const ChatWorkspace = () => {
 
       {/* COLUMN 2: MAIN VIEW WORKSPACE */}
       <section className="flex-1 border-r border-border-custom flex flex-col h-screen overflow-hidden bg-background-primary">
-        <header className="p-4 border-b border-border-custom flex items-center justify-between bg-background-secondary">
+        <header className="p-4 border-b border-border-custom flex items-center justify-between bg-background-secondary md:static sticky top-0 z-20">
           <div className="flex items-center space-x-3">
             {/* Mobile Sidebar Toggle */}
             <button
