@@ -942,11 +942,11 @@ const ChatWorkspace = () => {
           </div>
         </header>
 
-        <div className="flex-1 overflow-y-auto scrollbar-thin">
+        <div className="flex-1 flex flex-col overflow-hidden">
           
           {/* A. CHAT VIEW - REDESIGNED */}
           {activeView === 'chat' && (
-            <div className="h-full flex flex-col">
+            <div className="h-full flex flex-col relative">
               <AnimatePresence mode="wait">
                 {messages.length === 0 ? (
                   <motion.div
@@ -1219,8 +1219,8 @@ const ChatWorkspace = () => {
                       <div ref={messagesEndRef} />
                     </div>
 
-                    {/* Desktop Bottom Fixed Input */}
-                    <div className="hidden md:block fixed bottom-0 left-64 right-80 z-20 bg-background-primary border-t border-border-custom p-3 md:p-5">
+                    {/* Desktop Bottom Sticky Input */}
+                    <div className="hidden md:block sticky bottom-0 z-20 bg-background-primary border-t border-border-custom p-3 md:p-5">
                       <form onSubmit={handleSend} className="flex gap-2 md:gap-3 items-center max-w-4xl mx-auto px-1">
                         <input
                           type="file"
