@@ -8,7 +8,7 @@ import {
   Check, ArrowRight, Activity, Flame, Zap, AlertCircle, Shield, Trash2, 
   Play, Pause, Download, Sparkles, TrendingUp, Sliders, Search, User, 
   Bell, Lock, Database, Copy, RotateCcw, Maximize2, Volume2, Globe, EyeOff,
-  Info, FileText, Dumbbell, Languages, Menu, PanelRight, X
+  Info, FileText, Dumbbell, Languages, Menu, PanelRight, X, Mic, Paperclip
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -297,6 +297,8 @@ const ChatWorkspace = () => {
   const [loading, setLoading] = useState(false);
   const [currentSolutionHtml, setCurrentSolutionHtml] = useState('');
   const [currentQuery, setCurrentQuery] = useState('');
+  const [selectedFile, setSelectedFile] = useState(null);
+  const fileInputRef = useRef(null);
   
   // Responsive state
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
@@ -470,6 +472,30 @@ const ChatWorkspace = () => {
   };
 
   const handleSend = (e) => { e.preventDefault(); submitQuery(input); };
+
+  const handleFileClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setSelectedFile(e.target.files[0]);
+    }
+  };
+
+  const handleVoiceClick = () => {
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const recognition = new SpeechRecognition();
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        setInput(transcript);
+      };
+      recognition.start();
+    }
+  };
 
   const handleClearHistory = () => {
     setMessages([{ id: 'welcome', role: 'bot', content: "<p>All conversations cleared. Submit a new mathematical question.</p>" }]);
@@ -999,7 +1025,21 @@ const ChatWorkspace = () => {
                           onSubmit={handleSend}
                           className="w-full mb-8"
                         >
-                          <div className="relative">
+                          <div className="relative flex items-center gap-2 px-3 py-2 bg-background-secondary border-2 border-border-custom rounded-2xl shadow-sm focus-within:border-[var(--accent)]">
+                            <button
+                              type="button"
+                              onClick={handleFileClick}
+                              className="p-2 rounded-xl text-text-secondary hover:text-text-primary transition-all cursor-pointer"
+                            >
+                              <Paperclip size={18} />
+                            </button>
+                            <button
+                              type="button"
+                              onClick={handleVoiceClick}
+                              className="p-2 rounded-xl text-text-secondary hover:text-text-primary transition-all cursor-pointer"
+                            >
+                              <Mic size={18} />
+                            </button>
                             <input
                               type="text"
                               placeholder={t('askPlaceholder')}
@@ -1007,18 +1047,28 @@ const ChatWorkspace = () => {
                               onChange={(e) => setInput(e.target.value)}
                               disabled={loading}
                               autoFocus
-                              className="w-full px-6 py-4 rounded-2xl border-2 border-border-custom bg-background-secondary text-sm focus:outline-none focus:border-[var(--accent)] transition-all shadow-sm"
-                              style={{ '--tw-ring-color': 'var(--accent)' }}
+                              className="flex-grow bg-transparent border-none text-sm focus:outline-none"
                             />
+                            {selectedFile && (
+                              <div className="text-xs text-text-secondary px-2 py-1 bg-background-primary rounded-lg">
+                                {selectedFile.name}
+                              </div>
+                            )}
                             <button
                               type="submit"
                               disabled={loading || !input.trim()}
-                              className="absolute right-3 top-1/2 -translate-y-1/2 px-5 py-2 rounded-xl font-bold text-sm transition-all disabled:opacity-50 cursor-pointer"
+                              className="p-2.5 rounded-xl transition-all disabled:opacity-50 cursor-pointer"
                               style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}
                             >
-                              {t('solve')}
+                              <ArrowRight size={18} />
                             </button>
                           </div>
+                          <input
+                            type="file"
+                            ref={fileInputRef}
+                            onChange={handleFileChange}
+                            className="hidden"
+                          />
                         </form>
                       </div>
                     </div>
@@ -1028,7 +1078,27 @@ const ChatWorkspace = () => {
                       onSubmit={handleSend}
                       className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-background-primary/80 backdrop-blur-md border-t border-border-custom p-3"
                     >
+                      <input
+                        type="file"
+                        ref={fileInputRef}
+                        onChange={handleFileChange}
+                        className="hidden"
+                      />
                       <div className="max-w-2xl mx-auto flex items-center gap-2 bg-background-secondary rounded-full px-4 py-3 shadow-sm">
+                        <button
+                          type="button"
+                          onClick={handleFileClick}
+                          className="p-2 rounded-full text-text-secondary hover:text-text-primary transition-all cursor-pointer"
+                        >
+                          <Paperclip size={18} />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={handleVoiceClick}
+                          className="p-2 rounded-full text-text-secondary hover:text-text-primary transition-all cursor-pointer"
+                        >
+                          <Mic size={18} />
+                        </button>
                         <input
                           type="text"
                           placeholder="Ask a math problem"
@@ -1038,6 +1108,11 @@ const ChatWorkspace = () => {
                           autoFocus
                           className="flex-grow bg-transparent border-none text-sm focus:outline-none"
                         />
+                        {selectedFile && (
+                          <div className="text-xs text-text-secondary px-2 py-1 bg-background-primary rounded-lg">
+                            {selectedFile.name}
+                          </div>
+                        )}
                         <button
                           type="submit"
                           disabled={loading || !input.trim()}
@@ -1148,6 +1223,26 @@ const ChatWorkspace = () => {
                     <div className="hidden md:block p-3 md:p-5 border-t border-border-custom bg-background-secondary">
                       <form onSubmit={handleSend} className="flex gap-2 md:gap-3 items-center max-w-4xl mx-auto px-1">
                         <input
+                          type="file"
+                          ref={fileInputRef}
+                          onChange={handleFileChange}
+                          className="hidden"
+                        />
+                        <button
+                          type="button"
+                          onClick={handleFileClick}
+                          className="p-2 rounded-xl text-text-secondary hover:text-text-primary transition-all cursor-pointer"
+                        >
+                          <Paperclip size={20} />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={handleVoiceClick}
+                          className="p-2 rounded-xl text-text-secondary hover:text-text-primary transition-all cursor-pointer"
+                        >
+                          <Mic size={20} />
+                        </button>
+                        <input
                           type="text"
                           placeholder={t('askPlaceholder')}
                           value={input}
@@ -1155,13 +1250,18 @@ const ChatWorkspace = () => {
                           disabled={loading}
                           className="flex-grow px-3 md:px-5 py-2.5 md:py-3 rounded-2xl border border-border-custom bg-background-primary text-sm focus:outline-none focus:border-[var(--accent)] transition-all"
                         />
+                        {selectedFile && (
+                          <div className="text-xs text-text-secondary px-2 py-1 bg-background-primary rounded-lg border border-border-custom">
+                            {selectedFile.name}
+                          </div>
+                        )}
                         <button
                           type="submit"
                           disabled={loading || !input.trim()}
-                          className="px-4 md:px-5 py-2.5 md:py-3 rounded-2xl font-bold text-sm transition-all disabled:opacity-50 cursor-pointer"
+                          className="p-2.5 md:p-3 rounded-xl transition-all disabled:opacity-50 cursor-pointer"
                           style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}
                         >
-                          {t('send')}
+                          <ArrowRight size={18} />
                         </button>
                       </form>
                       <div className="flex flex-wrap gap-1.5 md:gap-2 justify-center mt-3 px-2">
@@ -1183,6 +1283,20 @@ const ChatWorkspace = () => {
                       className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-background-primary/80 backdrop-blur-md border-t border-border-custom p-3"
                     >
                       <div className="max-w-2xl mx-auto flex items-center gap-2 bg-background-secondary rounded-full px-4 py-3 shadow-sm">
+                        <button
+                          type="button"
+                          onClick={handleFileClick}
+                          className="p-2 rounded-full text-text-secondary hover:text-text-primary transition-all cursor-pointer"
+                        >
+                          <Paperclip size={18} />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={handleVoiceClick}
+                          className="p-2 rounded-full text-text-secondary hover:text-text-primary transition-all cursor-pointer"
+                        >
+                          <Mic size={18} />
+                        </button>
                         <input
                           type="text"
                           placeholder="Ask a math problem"
@@ -1191,6 +1305,11 @@ const ChatWorkspace = () => {
                           disabled={loading}
                           className="flex-grow bg-transparent border-none text-sm focus:outline-none"
                         />
+                        {selectedFile && (
+                          <div className="text-xs text-text-secondary px-2 py-1 bg-background-primary rounded-lg">
+                            {selectedFile.name}
+                          </div>
+                        )}
                         <button
                           type="submit"
                           disabled={loading || !input.trim()}
