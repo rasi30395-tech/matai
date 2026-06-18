@@ -597,14 +597,14 @@ const ChatWorkspace = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setMobileSidebarOpen(false)}
-            className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+            className="fixed inset-0 bg-black/50 z-40 md:hidden"
           />
         )}
       </AnimatePresence>
 
       {/* COLUMN 1: LEFT SIDEBAR */}
       <aside className={`border-r border-border-custom bg-background-secondary flex flex-col h-screen flex-shrink-0 select-none transition-all duration-300 z-50
-        lg:static lg:translate-x-0
+        md:static md:translate-x-0
         ${mobileSidebarOpen ? 'translate-x-0 fixed left-0 top-0' : '-translate-x-full fixed left-0 top-0'}
         ${sidebarCollapsed ? 'w-16' : 'w-64'}
       `}>
@@ -894,7 +894,7 @@ const ChatWorkspace = () => {
             {/* Mobile Sidebar Toggle */}
             <button
               onClick={() => setMobileSidebarOpen(true)}
-              className="lg:hidden p-2 rounded-lg hover:bg-background-primary text-text-primary cursor-pointer"
+              className="md:hidden p-2 rounded-lg hover:bg-background-primary text-text-primary cursor-pointer"
             >
               <Menu size={18} />
             </button>
@@ -929,7 +929,7 @@ const ChatWorkspace = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ duration: 0.4, ease: "easeOut" }}
-                    className="flex-1 flex flex-col items-center justify-center px-8"
+                    className="flex-1 flex flex-col items-center justify-center px-4 md:px-8"
                   >
                     {/* Logo */}
                     <div className="mb-6">
@@ -942,10 +942,10 @@ const ChatWorkspace = () => {
                     </div>
 
                     {/* Heading */}
-                    <h2 className="text-3xl font-bold text-text-primary mb-2">
+                    <h2 className="text-2xl md:text-3xl font-bold text-text-primary mb-2 text-center">
                       How can I help you solve mathematics today?
                     </h2>
-                    <p className="text-sm text-text-secondary mb-8 text-center max-w-lg">
+                    <p className="text-xs md:text-sm text-text-secondary mb-8 text-center max-w-lg px-2">
                       Ask anything from algebra to calculus, get step-by-step solutions, animated explanations, and interactive visualizations.
                     </p>
 
@@ -962,13 +962,13 @@ const ChatWorkspace = () => {
                           onChange={(e) => setInput(e.target.value)}
                           disabled={loading}
                           autoFocus
-                          className="w-full px-6 py-4 rounded-2xl border-2 border-border-custom bg-background-secondary text-sm focus:outline-none focus:border-[var(--accent)] transition-all shadow-sm"
+                          className="w-full px-4 py-3 md:px-6 md:py-4 rounded-2xl border-2 border-border-custom bg-background-secondary text-sm focus:outline-none focus:border-[var(--accent)] transition-all shadow-sm"
                           style={{ '--tw-ring-color': 'var(--accent)' }}
                         />
                         <button
                           type="submit"
                           disabled={loading || !input.trim()}
-                          className="absolute right-3 top-1/2 -translate-y-1/2 px-5 py-2 rounded-xl font-bold text-sm transition-all disabled:opacity-50 cursor-pointer"
+                          className="absolute right-2 md:right-3 top-1/2 -translate-y-1/2 px-4 md:px-5 py-2 rounded-xl font-bold text-sm transition-all disabled:opacity-50 cursor-pointer"
                           style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}
                         >
                           {t('solve')}
@@ -977,7 +977,7 @@ const ChatWorkspace = () => {
                     </form>
 
                     {/* Suggested Prompt Cards */}
-                    <div className="w-full max-w-2xl grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div className="w-full max-w-2xl grid grid-cols-1 gap-3 px-2 md:px-0">
                       {quickChips.map((chip, idx) => (
                         <motion.button
                           key={idx}
@@ -1012,10 +1012,10 @@ const ChatWorkspace = () => {
                           key={msg.id}
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
-                          className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                          className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} px-2 md:px-6`}
                         >
                           <div
-                            className={`max-w-[80%] rounded-2xl p-5 transition-all shadow-sm ${
+                            className={`max-w-[90%] md:max-w-[80%] rounded-2xl p-3 md:p-5 transition-all shadow-sm ${
                               msg.role === 'user'
                                 ? 'bg-[var(--accent)] text-[var(--accent-text)] rounded-tr-sm'
                                 : 'bg-background-secondary border border-border-custom rounded-tl-sm'
@@ -1057,9 +1057,9 @@ const ChatWorkspace = () => {
                         <motion.div
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
-                          className="flex justify-start"
+                          className="flex justify-start px-2 md:px-6"
                         >
-                          <div className="bg-background-secondary border border-border-custom rounded-2xl rounded-tl-sm p-5 space-y-3 shadow-sm">
+                          <div className="bg-background-secondary border border-border-custom rounded-2xl rounded-tl-sm p-3 md:p-5 space-y-3 shadow-sm">
                             <div className="flex items-center gap-2 text-xs font-semibold text-text-secondary mb-2">
                               <div
                                 className="w-5 h-5 rounded flex items-center justify-center font-bold text-xs"
@@ -1093,31 +1093,31 @@ const ChatWorkspace = () => {
                     </div>
 
                     {/* Bottom Input */}
-                    <div className="p-5 border-t border-border-custom bg-background-secondary">
-                      <form onSubmit={handleSend} className="flex gap-3 items-center max-w-4xl mx-auto">
+                    <div className="p-3 md:p-5 border-t border-border-custom bg-background-secondary">
+                      <form onSubmit={handleSend} className="flex gap-2 md:gap-3 items-center max-w-4xl mx-auto px-1">
                         <input
                           type="text"
                           placeholder={t('askPlaceholder')}
                           value={input}
                           onChange={(e) => setInput(e.target.value)}
                           disabled={loading}
-                          className="flex-grow px-5 py-3 rounded-2xl border border-border-custom bg-background-primary text-sm focus:outline-none focus:border-[var(--accent)] transition-all"
+                          className="flex-grow px-3 md:px-5 py-2.5 md:py-3 rounded-2xl border border-border-custom bg-background-primary text-sm focus:outline-none focus:border-[var(--accent)] transition-all"
                         />
                         <button
                           type="submit"
                           disabled={loading || !input.trim()}
-                          className="px-5 py-3 rounded-2xl font-bold text-sm transition-all disabled:opacity-50 cursor-pointer"
+                          className="px-4 md:px-5 py-2.5 md:py-3 rounded-2xl font-bold text-sm transition-all disabled:opacity-50 cursor-pointer"
                           style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}
                         >
                           {t('send')}
                         </button>
                       </form>
-                      <div className="flex flex-wrap gap-2 justify-center mt-3">
+                      <div className="flex flex-wrap gap-1.5 md:gap-2 justify-center mt-3 px-2">
                         {quickChips.slice(0, 4).map((chip, idx) => (
                           <button
                             key={idx}
                             onClick={() => setInput(chip + " ")}
-                            className="px-3 py-1.5 rounded-lg bg-background-primary hover:bg-border-custom/40 border border-border-custom transition-all text-[11px] font-medium text-text-secondary hover:text-text-primary cursor-pointer"
+                            className="px-2 md:px-3 py-1 md:py-1.5 rounded-lg bg-background-primary hover:bg-border-custom/40 border border-border-custom transition-all text-[10px] md:text-[11px] font-medium text-text-secondary hover:text-text-primary cursor-pointer"
                           >
                             {chip}
                           </button>
@@ -1132,7 +1132,7 @@ const ChatWorkspace = () => {
 
           {/* B. EXPLORE VIEW */}
           {activeView === 'explore' && (
-            <div className="p-6 space-y-6 animate-fade-in">
+            <div className="p-4 md:p-6 space-y-6 animate-fade-in">
               <div className="flex items-center space-x-2 bg-background-secondary border border-border-custom px-3 py-2 rounded-xl">
                 <Search size={14} className="text-text-secondary" />
                 <input type="text" placeholder={t('searchTopics')} value={exploreSearch} onChange={(e) => setExploreSearch(e.target.value)} className="flex-grow bg-transparent border-none text-xs p-0 text-text-primary" />
@@ -1190,7 +1190,7 @@ const ChatWorkspace = () => {
 
           {/* C. PROBLEMS VIEW */}
           {activeView === 'problems' && (
-            <div className="p-6 space-y-6 animate-fade-in">
+            <div className="p-4 md:p-6 space-y-6 animate-fade-in">
               <div className="flex flex-col md:flex-row gap-3">
                 <div className="flex-grow flex items-center space-x-2 bg-background-secondary border border-border-custom px-3 py-2 rounded-xl">
                   <Search size={14} className="text-text-secondary" />
@@ -1222,7 +1222,7 @@ const ChatWorkspace = () => {
 
           {/* D. HISTORY VIEW */}
           {activeView === 'history' && (
-            <div className="p-6 space-y-6 animate-fade-in">
+            <div className="p-4 md:p-6 space-y-6 animate-fade-in">
               <div className="flex gap-3 items-center">
                 <div className="flex-grow flex items-center space-x-2 bg-background-secondary border border-border-custom px-3 py-2 rounded-xl">
                   <Search size={14} className="text-text-secondary" /><input type="text" placeholder={t('searchHistory')} value={historySearch} onChange={(e) => setHistorySearch(e.target.value)} className="flex-grow bg-transparent border-none text-xs p-0" />
@@ -1246,7 +1246,7 @@ const ChatWorkspace = () => {
 
           {/* E. BOOKMARKS VIEW */}
           {activeView === 'bookmarks' && (
-            <div className="p-6 space-y-6 animate-fade-in">
+            <div className="p-4 md:p-6 space-y-6 animate-fade-in">
               <div className="flex flex-col md:flex-row gap-3">
                 <div className="flex-grow flex items-center space-x-2 bg-background-secondary border border-border-custom px-3 py-2 rounded-xl"><Search size={14} className="text-text-secondary" /><input type="text" placeholder={t('searchBookmarks')} value={bookmarksSearch} onChange={(e) => setBookmarksSearch(e.target.value)} className="flex-grow bg-transparent border-none text-xs p-0" /></div>
                 <select value={bookmarksCategory} onChange={(e) => setBookmarksCategory(e.target.value)} className="p-2 text-xs rounded-xl border border-border-custom bg-background-primary">
@@ -1269,7 +1269,7 @@ const ChatWorkspace = () => {
 
           {/* F. ACHIEVEMENTS VIEW */}
           {activeView === 'achievements' && (
-            <div className="p-6 space-y-6 animate-fade-in">
+            <div className="p-4 md:p-6 space-y-6 animate-fade-in">
               <div className="max-w-xl space-y-1"><h2 className="text-base font-bold">{t('achievements')}</h2><p className="text-xs text-text-secondary">Earn badges and XP rewards by solving equations and compiling animations.</p></div>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <div className="p-3 border border-border-custom bg-background-secondary rounded-xl text-center space-y-0.5"><span className="text-lg font-bold">{statsProblemsSolved}</span><span className="text-[10px] font-mono text-text-secondary uppercase block">{t('problemsSolved')}</span></div>
@@ -1303,7 +1303,7 @@ const ChatWorkspace = () => {
 
           {/* G. ANALYTICS VIEW */}
           {activeView === 'analytics' && (
-            <div className="p-6 space-y-6 animate-fade-in">
+            <div className="p-4 md:p-6 space-y-6 animate-fade-in">
               <div className="max-w-xl space-y-1"><h2 className="text-base font-bold">{t('analytics')}</h2><p className="text-xs text-text-secondary">Comprehensive logs monitoring calculation speeds, accuracies, and coverage.</p></div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="p-4 border border-border-custom bg-background-secondary rounded-2xl space-y-2"><div className="flex items-center justify-between"><span className="text-xs font-bold">{t('solvingAccuracy')}</span><TrendingUp size={14} className="text-green-500" /></div><span className="text-2xl font-bold font-mono tracking-tight block">96.4%</span><p className="text-[10px] text-text-secondary">Derived from 48 calculations with valid proofs.</p></div>
@@ -1339,7 +1339,7 @@ const ChatWorkspace = () => {
 
           {/* H. PRACTICE VIEW */}
           {activeView === 'practice' && (
-            <div className="p-6 space-y-6 animate-fade-in">
+            <div className="p-4 md:p-6 space-y-6 animate-fade-in">
               <div className="max-w-xl space-y-1"><h2 className="text-base font-bold">{t('practiceTitle')}</h2><p className="text-xs text-text-secondary">Select a topic and difficulty, then generate practice questions to sharpen your skills.</p></div>
               <div className="flex flex-col md:flex-row gap-4">
                 <div className="flex-1 space-y-2">
@@ -1357,7 +1357,7 @@ const ChatWorkspace = () => {
               </div>
               <button onClick={generatePracticeQuestion} className="px-6 py-2.5 rounded-xl text-xs font-bold cursor-pointer transition-all" style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}>{t('generateQuestion')}</button>
               {practiceQuestion && (
-                <div className="border border-border-custom rounded-2xl p-6 bg-background-secondary space-y-4 animate-fade-in">
+                <div className="border border-border-custom rounded-2xl p-4 md:p-6 bg-background-secondary space-y-4 animate-fade-in">
                   <div className="space-y-2">
                     <span className="text-[10px] font-mono text-text-secondary uppercase">Question:</span>
                     <p className="text-sm font-bold font-mono text-text-primary">{practiceQuestion.q}</p>
@@ -1379,7 +1379,7 @@ const ChatWorkspace = () => {
 
           {/* I. FORMULA SHEET VIEW */}
           {activeView === 'formula sheet' && (
-            <div className="p-6 space-y-6 animate-fade-in">
+            <div className="p-4 md:p-6 space-y-6 animate-fade-in">
               <div className="max-w-xl space-y-1"><h2 className="text-base font-bold">{t('formulaSheetTitle')}</h2><p className="text-xs text-text-secondary">Quick reference formulas organized by mathematical category.</p></div>
               <div className="flex flex-wrap gap-2">
                 {['algebra', 'trigonometry', 'calculus', 'statistics', 'linearAlgebra'].map((cat) => (
