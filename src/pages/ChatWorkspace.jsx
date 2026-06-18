@@ -1025,43 +1025,57 @@ const ChatWorkspace = () => {
                           onSubmit={handleSend}
                           className="w-full mb-8"
                         >
-                          <div className="relative flex items-center gap-2 px-3 py-2 bg-background-secondary border-2 border-border-custom rounded-2xl shadow-sm focus-within:border-[var(--accent)]">
+                          <div className="flex items-center gap-3 px-5 py-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-full shadow-sm hover:shadow-md transition-shadow">
                             <button
                               type="button"
                               onClick={handleFileClick}
-                              className="p-2 rounded-xl text-text-secondary hover:text-text-primary transition-all cursor-pointer"
+                              className="p-2 rounded-full text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
                             >
-                              <Paperclip size={18} />
-                            </button>
-                            <button
-                              type="button"
-                              onClick={handleVoiceClick}
-                              className="p-2 rounded-xl text-text-secondary hover:text-text-primary transition-all cursor-pointer"
-                            >
-                              <Mic size={18} />
+                              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <path d="M12 5v14M5 12h14"/>
+                              </svg>
                             </button>
                             <input
                               type="text"
-                              placeholder={t('askPlaceholder')}
+                              placeholder="Ask anything"
                               value={input}
                               onChange={(e) => setInput(e.target.value)}
                               disabled={loading}
                               autoFocus
-                              className="flex-grow bg-transparent border-none text-sm focus:outline-none placeholder:text-text-secondary/60"
+                              className="flex-grow bg-transparent border-none text-base text-gray-900 dark:text-gray-100 focus:outline-none placeholder:text-gray-500 dark:placeholder:text-gray-400"
                             />
-                            {selectedFile && (
-                              <div className="text-xs text-text-secondary px-2 py-1 bg-background-primary rounded-lg">
-                                {selectedFile.name}
-                              </div>
-                            )}
-                            <button
-                              type="submit"
-                              disabled={loading || !input.trim()}
-                              className="p-2.5 rounded-xl transition-all disabled:opacity-50 cursor-pointer"
-                              style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}
-                            >
-                              <ArrowRight size={18} />
-                            </button>
+                            <div className="flex items-center gap-3">
+                              <button
+                                type="button"
+                                onClick={handleVoiceClick}
+                                className="p-2 rounded-full text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
+                              >
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                  <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                                  <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                                  <line x1="12" y1="19" x2="12" y2="23"/>
+                                  <line x1="8" y1="23" x2="16" y2="23"/>
+                                </svg>
+                              </button>
+                              <button
+                                type="submit"
+                                disabled={loading || !input.trim()}
+                                className="p-3 rounded-full transition-all disabled:opacity-50 disabled:bg-gray-300 dark:disabled:bg-gray-700 cursor-pointer"
+                                style={{ backgroundColor: loading || !input.trim() ? undefined : 'var(--accent)', color: loading || !input.trim() ? undefined : 'var(--accent-text)' }}
+                              >
+                                {loading ? (
+                                  <svg className="animate-spin" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <circle cx="12" cy="12" r="10" strokeOpacity="0.25"/>
+                                    <path d="M12 2a10 10 0 0 1 10 10" strokeLinecap="round"/>
+                                  </svg>
+                                ) : (
+                                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M8 12l3 3 5-6"/>
+                                  </svg>
+                                )}
+                              </button>
+                            </div>
                           </div>
                           <input
                             type="file"
@@ -1076,7 +1090,7 @@ const ChatWorkspace = () => {
                     {/* Mobile Fixed Bottom Input (Initial State) */}
                     <form
                       onSubmit={handleSend}
-                      className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-background-primary/80 backdrop-blur-md border-t border-border-custom p-3"
+                      className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 p-3"
                     >
                       <input
                         type="file"
@@ -1084,43 +1098,57 @@ const ChatWorkspace = () => {
                         onChange={handleFileChange}
                         className="hidden"
                       />
-                      <div className="max-w-2xl mx-auto flex items-center gap-2 bg-background-secondary rounded-full px-4 py-3 shadow-sm">
+                      <div className="max-w-2xl mx-auto flex items-center gap-3 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-full px-4 py-3 shadow-sm hover:shadow-md transition-shadow">
                         <button
                           type="button"
                           onClick={handleFileClick}
-                          className="p-2 rounded-full text-text-secondary hover:text-text-primary transition-all cursor-pointer"
+                          className="p-2 rounded-full text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
                         >
-                          <Paperclip size={18} />
-                        </button>
-                        <button
-                          type="button"
-                          onClick={handleVoiceClick}
-                          className="p-2 rounded-full text-text-secondary hover:text-text-primary transition-all cursor-pointer"
-                        >
-                          <Mic size={18} />
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M12 5v14M5 12h14"/>
+                          </svg>
                         </button>
                         <input
                           type="text"
-                          placeholder="Ask a math problem"
+                          placeholder="Ask anything"
                           value={input}
                           onChange={(e) => setInput(e.target.value)}
                           disabled={loading}
                           autoFocus
-                          className="flex-grow bg-transparent border-none text-sm focus:outline-none placeholder:text-text-secondary/60"
+                          className="flex-grow bg-transparent border-none text-base text-gray-900 dark:text-gray-100 focus:outline-none placeholder:text-gray-500 dark:placeholder:text-gray-400"
                         />
-                        {selectedFile && (
-                          <div className="text-xs text-text-secondary px-2 py-1 bg-background-primary rounded-lg">
-                            {selectedFile.name}
-                          </div>
-                        )}
-                        <button
-                          type="submit"
-                          disabled={loading || !input.trim()}
-                          className="p-2 rounded-full transition-all disabled:opacity-50 cursor-pointer"
-                          style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}
-                        >
-                          <ArrowRight size={18} />
-                        </button>
+                        <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={handleVoiceClick}
+                            className="p-2 rounded-full text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
+                          >
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                              <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                              <line x1="12" y1="19" x2="12" y2="23"/>
+                              <line x1="8" y1="23" x2="16" y2="23"/>
+                            </svg>
+                          </button>
+                          <button
+                            type="submit"
+                            disabled={loading || !input.trim()}
+                            className="p-2.5 rounded-full transition-all disabled:opacity-50 disabled:bg-gray-300 dark:disabled:bg-gray-700 cursor-pointer"
+                            style={{ backgroundColor: loading || !input.trim() ? undefined : 'var(--accent)', color: loading || !input.trim() ? undefined : 'var(--accent-text)' }}
+                          >
+                            {loading ? (
+                              <svg className="animate-spin" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <circle cx="12" cy="12" r="10" strokeOpacity="0.25"/>
+                                <path d="M12 2a10 10 0 0 1 10 10" strokeLinecap="round"/>
+                              </svg>
+                            ) : (
+                              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M8 12l3 3 5-6"/>
+                              </svg>
+                            )}
+                          </button>
+                        </div>
                       </div>
                     </form>
                   </motion.div>
@@ -1220,49 +1248,65 @@ const ChatWorkspace = () => {
                     </div>
 
                     {/* Desktop Bottom Input (Keep Original) */}
-                    <div className="hidden md:block p-3 md:p-5 border-t border-border-custom bg-background-secondary">
-                      <form onSubmit={handleSend} className="flex gap-2 md:gap-3 items-center max-w-4xl mx-auto px-1">
+                    <div className="hidden md:block p-3 md:p-5 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+                      <form onSubmit={handleSend} className="flex items-center gap-3 max-w-4xl mx-auto px-1">
                         <input
                           type="file"
                           ref={fileInputRef}
                           onChange={handleFileChange}
                           className="hidden"
                         />
-                        <button
-                          type="button"
-                          onClick={handleFileClick}
-                          className="p-2 rounded-xl text-text-secondary hover:text-text-primary transition-all cursor-pointer"
-                        >
-                          <Paperclip size={20} />
-                        </button>
-                        <button
-                          type="button"
-                          onClick={handleVoiceClick}
-                          className="p-2 rounded-xl text-text-secondary hover:text-text-primary transition-all cursor-pointer"
-                        >
-                          <Mic size={20} />
-                        </button>
-                        <input
-                          type="text"
-                          placeholder={t('askPlaceholder')}
-                          value={input}
-                          onChange={(e) => setInput(e.target.value)}
-                          disabled={loading}
-                          className="flex-grow px-3 md:px-5 py-2.5 md:py-3 rounded-2xl border border-border-custom bg-background-primary text-sm focus:outline-none focus:border-[var(--accent)] transition-all placeholder:text-text-secondary/60"
-                        />
-                        {selectedFile && (
-                          <div className="text-xs text-text-secondary px-2 py-1 bg-background-primary rounded-lg border border-border-custom">
-                            {selectedFile.name}
+                        <div className="flex items-center gap-3 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-full px-5 py-4 shadow-sm hover:shadow-md transition-shadow flex-grow">
+                          <button
+                            type="button"
+                            onClick={handleFileClick}
+                            className="p-2 rounded-full text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
+                          >
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                              <path d="M12 5v14M5 12h14"/>
+                            </svg>
+                          </button>
+                          <input
+                            type="text"
+                            placeholder="Ask anything"
+                            value={input}
+                            onChange={(e) => setInput(e.target.value)}
+                            disabled={loading}
+                            className="flex-grow bg-transparent border-none text-base text-gray-900 dark:text-gray-100 focus:outline-none placeholder:text-gray-500 dark:placeholder:text-gray-400"
+                          />
+                          <div className="flex items-center gap-3">
+                            <button
+                              type="button"
+                              onClick={handleVoiceClick}
+                              className="p-2 rounded-full text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
+                            >
+                              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                                <line x1="12" y1="19" x2="12" y2="23"/>
+                                <line x1="8" y1="23" x2="16" y2="23"/>
+                              </svg>
+                            </button>
+                            <button
+                              type="submit"
+                              disabled={loading || !input.trim()}
+                              className="p-3 rounded-full transition-all disabled:opacity-50 disabled:bg-gray-300 dark:disabled:bg-gray-700 cursor-pointer"
+                              style={{ backgroundColor: loading || !input.trim() ? undefined : 'var(--accent)', color: loading || !input.trim() ? undefined : 'var(--accent-text)' }}
+                            >
+                              {loading ? (
+                                <svg className="animate-spin" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                  <circle cx="12" cy="12" r="10" strokeOpacity="0.25"/>
+                                  <path d="M12 2a10 10 0 0 1 10 10" strokeLinecap="round"/>
+                                </svg>
+                              ) : (
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                  <circle cx="12" cy="12" r="10"/>
+                                  <path d="M8 12l3 3 5-6"/>
+                                </svg>
+                              )}
+                            </button>
                           </div>
-                        )}
-                        <button
-                          type="submit"
-                          disabled={loading || !input.trim()}
-                          className="p-2.5 md:p-3 rounded-xl transition-all disabled:opacity-50 cursor-pointer"
-                          style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}
-                        >
-                          <ArrowRight size={18} />
-                        </button>
+                        </div>
                       </form>
                       <div className="flex flex-wrap gap-1.5 md:gap-2 justify-center mt-3 px-2">
                         {quickChips.map((chip, idx) => (
@@ -1280,44 +1324,58 @@ const ChatWorkspace = () => {
                     {/* Mobile Fixed Bottom Input (Conversation Mode) */}
                     <form
                       onSubmit={handleSend}
-                      className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-background-primary/80 backdrop-blur-md border-t border-border-custom p-3"
+                      className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 p-3"
                     >
-                      <div className="max-w-2xl mx-auto flex items-center gap-2 bg-background-secondary rounded-full px-4 py-3 shadow-sm">
+                      <div className="max-w-2xl mx-auto flex items-center gap-3 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-full px-4 py-3 shadow-sm hover:shadow-md transition-shadow">
                         <button
                           type="button"
                           onClick={handleFileClick}
-                          className="p-2 rounded-full text-text-secondary hover:text-text-primary transition-all cursor-pointer"
+                          className="p-2 rounded-full text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
                         >
-                          <Paperclip size={18} />
-                        </button>
-                        <button
-                          type="button"
-                          onClick={handleVoiceClick}
-                          className="p-2 rounded-full text-text-secondary hover:text-text-primary transition-all cursor-pointer"
-                        >
-                          <Mic size={18} />
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M12 5v14M5 12h14"/>
+                          </svg>
                         </button>
                         <input
                           type="text"
-                          placeholder="Ask a math problem"
+                          placeholder="Ask anything"
                           value={input}
                           onChange={(e) => setInput(e.target.value)}
                           disabled={loading}
-                          className="flex-grow bg-transparent border-none text-sm focus:outline-none placeholder:text-text-secondary/60"
+                          className="flex-grow bg-transparent border-none text-base text-gray-900 dark:text-gray-100 focus:outline-none placeholder:text-gray-500 dark:placeholder:text-gray-400"
                         />
-                        {selectedFile && (
-                          <div className="text-xs text-text-secondary px-2 py-1 bg-background-primary rounded-lg">
-                            {selectedFile.name}
-                          </div>
-                        )}
-                        <button
-                          type="submit"
-                          disabled={loading || !input.trim()}
-                          className="p-2 rounded-full transition-all disabled:opacity-50 cursor-pointer"
-                          style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}
-                        >
-                          <ArrowRight size={18} />
-                        </button>
+                        <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={handleVoiceClick}
+                            className="p-2 rounded-full text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
+                          >
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                              <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                              <line x1="12" y1="19" x2="12" y2="23"/>
+                              <line x1="8" y1="23" x2="16" y2="23"/>
+                            </svg>
+                          </button>
+                          <button
+                            type="submit"
+                            disabled={loading || !input.trim()}
+                            className="p-2.5 rounded-full transition-all disabled:opacity-50 disabled:bg-gray-300 dark:disabled:bg-gray-700 cursor-pointer"
+                            style={{ backgroundColor: loading || !input.trim() ? undefined : 'var(--accent)', color: loading || !input.trim() ? undefined : 'var(--accent-text)' }}
+                          >
+                            {loading ? (
+                              <svg className="animate-spin" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <circle cx="12" cy="12" r="10" strokeOpacity="0.25"/>
+                                <path d="M12 2a10 10 0 0 1 10 10" strokeLinecap="round"/>
+                              </svg>
+                            ) : (
+                              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M8 12l3 3 5-6"/>
+                              </svg>
+                            )}
+                          </button>
+                        </div>
                       </div>
                     </form>
                   </motion.div>
