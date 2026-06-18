@@ -1076,7 +1076,7 @@ const ChatWorkspace = () => {
                     {/* Mobile Fixed Bottom Input (Initial State) */}
                     <form
                       onSubmit={handleSend}
-                      className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-background-primary/80 backdrop-blur-md border-t border-border-custom p-3"
+                      className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-background-primary/80 backdrop-blur-md border-t border-border-custom p-3 pb-[calc(12px+env(safe-area-inset-bottom))]"
                     >
                       <input
                         type="file"
@@ -1139,10 +1139,10 @@ const ChatWorkspace = () => {
                           key={msg.id}
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
-                          className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} px-2 md:px-6`}
+                          className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} px-2 md:px-6 w-full min-w-0`}
                         >
                           <div
-                            className={`max-w-[90%] md:max-w-[80%] rounded-2xl p-3 md:p-5 transition-all shadow-sm ${
+                            className={`max-w-[90%] md:max-w-[80%] w-full rounded-2xl p-3 md:p-5 transition-all shadow-sm break-words ${
                               msg.role === 'user'
                                 ? 'bg-[var(--accent)] text-[var(--accent-text)] rounded-tr-sm'
                                 : 'bg-background-secondary border border-border-custom rounded-tl-sm'
@@ -1280,7 +1280,7 @@ const ChatWorkspace = () => {
                     {/* Mobile Fixed Bottom Input (Conversation Mode) */}
                     <form
                       onSubmit={handleSend}
-                      className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-background-primary/80 backdrop-blur-md border-t border-border-custom p-3"
+                      className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-background-primary/80 backdrop-blur-md border-t border-border-custom p-3 pb-[calc(12px+env(safe-area-inset-bottom))]"
                     >
                       <div className="max-w-2xl mx-auto flex items-center gap-2 bg-background-secondary rounded-full px-4 py-3 shadow-sm">
                         <button
@@ -1328,7 +1328,7 @@ const ChatWorkspace = () => {
 
           {/* B. EXPLORE VIEW */}
           {activeView === 'explore' && (
-            <div className="p-4 md:p-6 space-y-6 animate-fade-in">
+            <div className="p-4 md:p-6 space-y-6 animate-fade-in w-full min-w-0">
               <div className="flex items-center space-x-2 bg-background-secondary border border-border-custom px-3 py-2 rounded-xl">
                 <Search size={14} className="text-text-secondary" />
                 <input type="text" placeholder={t('searchTopics')} value={exploreSearch} onChange={(e) => setExploreSearch(e.target.value)} className="flex-grow bg-transparent border-none text-xs p-0 text-text-primary" />
@@ -1386,7 +1386,7 @@ const ChatWorkspace = () => {
 
           {/* C. PROBLEMS VIEW */}
           {activeView === 'problems' && (
-            <div className="p-4 md:p-6 space-y-6 animate-fade-in">
+            <div className="p-4 md:p-6 space-y-6 animate-fade-in w-full min-w-0">
               <div className="flex flex-col md:flex-row gap-3">
                 <div className="flex-grow flex items-center space-x-2 bg-background-secondary border border-border-custom px-3 py-2 rounded-xl">
                   <Search size={14} className="text-text-secondary" />
@@ -1418,7 +1418,7 @@ const ChatWorkspace = () => {
 
           {/* D. HISTORY VIEW */}
           {activeView === 'history' && (
-            <div className="p-4 md:p-6 space-y-6 animate-fade-in">
+            <div className="p-4 md:p-6 space-y-6 animate-fade-in w-full min-w-0">
               <div className="flex gap-3 items-center">
                 <div className="flex-grow flex items-center space-x-2 bg-background-secondary border border-border-custom px-3 py-2 rounded-xl">
                   <Search size={14} className="text-text-secondary" /><input type="text" placeholder={t('searchHistory')} value={historySearch} onChange={(e) => setHistorySearch(e.target.value)} className="flex-grow bg-transparent border-none text-xs p-0" />
@@ -1442,7 +1442,7 @@ const ChatWorkspace = () => {
 
           {/* E. BOOKMARKS VIEW */}
           {activeView === 'bookmarks' && (
-            <div className="p-4 md:p-6 space-y-6 animate-fade-in">
+            <div className="p-4 md:p-6 space-y-6 animate-fade-in w-full min-w-0">
               <div className="flex flex-col md:flex-row gap-3">
                 <div className="flex-grow flex items-center space-x-2 bg-background-secondary border border-border-custom px-3 py-2 rounded-xl"><Search size={14} className="text-text-secondary" /><input type="text" placeholder={t('searchBookmarks')} value={bookmarksSearch} onChange={(e) => setBookmarksSearch(e.target.value)} className="flex-grow bg-transparent border-none text-xs p-0" /></div>
                 <select value={bookmarksCategory} onChange={(e) => setBookmarksCategory(e.target.value)} className="p-2 text-xs rounded-xl border border-border-custom bg-background-primary">
@@ -1465,7 +1465,7 @@ const ChatWorkspace = () => {
 
           {/* F. ACHIEVEMENTS VIEW */}
           {activeView === 'achievements' && (
-            <div className="p-4 md:p-6 space-y-6 animate-fade-in">
+            <div className="p-4 md:p-6 space-y-6 animate-fade-in w-full min-w-0">
               <div className="max-w-xl space-y-1"><h2 className="text-base font-bold">{t('achievements')}</h2><p className="text-xs text-text-secondary">Earn badges and XP rewards by solving equations and compiling animations.</p></div>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <div className="p-3 border border-border-custom bg-background-secondary rounded-xl text-center space-y-0.5"><span className="text-lg font-bold">{statsProblemsSolved}</span><span className="text-[10px] font-mono text-text-secondary uppercase block">{t('problemsSolved')}</span></div>
