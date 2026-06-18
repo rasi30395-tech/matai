@@ -1031,7 +1031,7 @@ const ChatWorkspace = () => {
                       <div className="max-w-2xl mx-auto flex items-center gap-2 bg-background-primary rounded-2xl border border-border-custom px-3 py-2">
                         <input
                           type="text"
-                          placeholder={t('askPlaceholder')}
+                          placeholder="Ask a math problem"
                           value={input}
                           onChange={(e) => setInput(e.target.value)}
                           disabled={loading}
@@ -1185,7 +1185,7 @@ const ChatWorkspace = () => {
                       <div className="max-w-2xl mx-auto flex items-center gap-2 bg-background-primary rounded-2xl border border-border-custom px-3 py-2">
                         <input
                           type="text"
-                          placeholder={t('askPlaceholder')}
+                          placeholder="Ask a math problem"
                           value={input}
                           onChange={(e) => setInput(e.target.value)}
                           disabled={loading}
