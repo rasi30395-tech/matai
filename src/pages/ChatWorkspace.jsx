@@ -949,52 +949,58 @@ const ChatWorkspace = () => {
                       Ask anything from algebra to calculus, get step-by-step solutions, animated explanations, and interactive visualizations.
                     </p>
 
-                    {/* Prompt Input */}
-                    <form
-                      onSubmit={handleSend}
-                      className="w-full max-w-2xl mb-8"
-                    >
-                      <div className="relative">
-                        <input
-                          type="text"
-                          placeholder={t('askPlaceholder')}
-                          value={input}
-                          onChange={(e) => setInput(e.target.value)}
-                          disabled={loading}
-                          autoFocus
-                          className="w-full px-4 py-3 md:px-6 md:py-4 rounded-2xl border-2 border-border-custom bg-background-secondary text-sm focus:outline-none focus:border-[var(--accent)] transition-all shadow-sm"
-                          style={{ '--tw-ring-color': 'var(--accent)' }}
-                        />
-                        <button
-                          type="submit"
-                          disabled={loading || !input.trim()}
-                          className="absolute right-2 md:right-3 top-1/2 -translate-y-1/2 px-4 md:px-5 py-2 rounded-xl font-bold text-sm transition-all disabled:opacity-50 cursor-pointer"
-                          style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}
-                        >
-                          {t('solve')}
-                        </button>
+                    <div className="flex flex-col md:flex-col-reverse w-full max-w-2xl">
+                      {/* Suggested Prompt Cards */}
+                      <div className="w-full grid grid-cols-1 gap-3 px-2 md:px-0 md:mb-0">
+                        {quickChips.map((chip, idx) => (
+                          <motion.button
+                            key={idx}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: idx * 0.05 }}
+                            onClick={() => submitQuery(chip)}
+                            className="text-left p-4 rounded-xl border border-border-custom bg-background-primary hover:bg-background-secondary transition-all hover:border-[var(--accent)] cursor-pointer group"
+                          >
+                            <div className="font-semibold text-sm text-text-primary group-hover:text-[var(--accent)]">
+                              {chip}
+                            </div>
+                            <div className="text-xs text-text-secondary mt-1">
+                              Try this example
+                            </div>
+                          </motion.button>
+                        ))}
                       </div>
-                    </form>
 
-                    {/* Suggested Prompt Cards */}
-                    <div className="w-full max-w-2xl grid grid-cols-1 gap-3 px-2 md:px-0">
-                      {quickChips.map((chip, idx) => (
-                        <motion.button
-                          key={idx}
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: idx * 0.05 }}
-                          onClick={() => submitQuery(chip)}
-                          className="text-left p-4 rounded-xl border border-border-custom bg-background-primary hover:bg-background-secondary transition-all hover:border-[var(--accent)] cursor-pointer group"
-                        >
-                          <div className="font-semibold text-sm text-text-primary group-hover:text-[var(--accent)]">
-                            {chip}
+                      {/* Prompt Input */}
+                      <form
+                        onSubmit={handleSend}
+                        className="w-full mb-8 md:mb-8"
+                      >
+                        {/* Mobile: flex layout */}
+                        <div className="flex flex-col gap-2 md:block">
+                          {/* Desktop: relative with absolute button */}
+                          <div className="md:relative">
+                            <input
+                              type="text"
+                              placeholder={t('askPlaceholder')}
+                              value={input}
+                              onChange={(e) => setInput(e.target.value)}
+                              disabled={loading}
+                              autoFocus
+                              className="w-full px-4 py-3 md:px-6 md:py-4 rounded-2xl border-2 border-border-custom bg-background-secondary text-sm focus:outline-none focus:border-[var(--accent)] transition-all shadow-sm md:pr-24"
+                              style={{ '--tw-ring-color': 'var(--accent)' }}
+                            />
+                            <button
+                              type="submit"
+                              disabled={loading || !input.trim()}
+                              className="w-full md:absolute md:right-3 md:top-1/2 md:-translate-y-1/2 px-4 md:px-5 py-2 md:py-2 rounded-xl font-bold text-sm transition-all disabled:opacity-50 cursor-pointer"
+                              style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}
+                            >
+                              {t('solve')}
+                            </button>
                           </div>
-                          <div className="text-xs text-text-secondary mt-1">
-                            Try this example
-                          </div>
-                        </motion.button>
-                      ))}
+                        </div>
+                      </form>
                     </div>
                   </motion.div>
                 ) : (
