@@ -929,29 +929,29 @@ const ChatWorkspace = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ duration: 0.4, ease: "easeOut" }}
-                    className="flex-1 flex flex-col items-center justify-center px-4 md:px-8"
+                    className="flex-1 flex flex-col md:items-center md:justify-center"
                   >
-                    {/* Logo */}
-                    <div className="mb-6">
-                      <div
-                        className="w-16 h-16 rounded-2xl flex items-center justify-center font-bold text-2xl shadow-lg"
-                        style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}
-                      >
-                        M
+                    <div className="flex-1 md:flex-none md:w-full flex flex-col items-center justify-center px-4 md:px-8 pb-20 md:pb-0">
+                      {/* Logo */}
+                      <div className="mb-6">
+                        <div
+                          className="w-16 h-16 rounded-2xl flex items-center justify-center font-bold text-2xl shadow-lg"
+                          style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}
+                        >
+                          M
+                        </div>
                       </div>
-                    </div>
 
-                    {/* Heading */}
-                    <h2 className="text-2xl md:text-3xl font-bold text-text-primary mb-2 text-center">
-                      How can I help you solve mathematics today?
-                    </h2>
-                    <p className="text-xs md:text-sm text-text-secondary mb-8 text-center max-w-lg px-2">
-                      Ask anything from algebra to calculus, get step-by-step solutions, animated explanations, and interactive visualizations.
-                    </p>
+                      {/* Heading */}
+                      <h2 className="text-2xl md:text-3xl font-bold text-text-primary mb-2 text-center">
+                        How can I help you solve mathematics today?
+                      </h2>
+                      <p className="text-xs md:text-sm text-text-secondary mb-8 text-center max-w-lg px-2">
+                        Ask anything from algebra to calculus, get step-by-step solutions, animated explanations, and interactive visualizations.
+                      </p>
 
-                    <div className="flex flex-col md:flex-col-reverse w-full max-w-2xl">
-                      {/* Suggested Prompt Cards */}
-                      <div className="w-full grid grid-cols-1 gap-3 px-2 md:px-0">
+                      {/* Mobile Suggested Prompt Cards (Above Input) */}
+                      <div className="w-full max-w-2xl grid grid-cols-1 gap-3 px-2 md:hidden mb-4">
                         {quickChips.map((chip, idx) => (
                           <motion.button
                             key={idx}
@@ -971,55 +971,83 @@ const ChatWorkspace = () => {
                         ))}
                       </div>
 
-                      {/* Prompt Input */}
-                      <form
-                        onSubmit={handleSend}
-                        className="w-full mb-8"
-                      >
-                        {/* Mobile: flex layout */}
-                        <div className="flex flex-col gap-2 md:hidden">
-                          <input
-                            type="text"
-                            placeholder={t('askPlaceholder')}
-                            value={input}
-                            onChange={(e) => setInput(e.target.value)}
-                            disabled={loading}
-                            autoFocus
-                            className="w-full px-4 py-3 rounded-2xl border-2 border-border-custom bg-background-secondary text-sm focus:outline-none focus:border-[var(--accent)] transition-all shadow-sm"
-                            style={{ '--tw-ring-color': 'var(--accent)' }}
-                          />
-                          <button
-                            type="submit"
-                            disabled={loading || !input.trim()}
-                            className="w-full px-4 py-2 rounded-xl font-bold text-sm transition-all disabled:opacity-50 cursor-pointer"
-                            style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}
-                          >
-                            {t('solve')}
-                          </button>
+                      {/* Desktop Layout (Original) */}
+                      <div className="hidden md:flex flex-col md:flex-col-reverse w-full max-w-2xl">
+                        {/* Desktop Suggested Cards (Below Input) */}
+                        <div className="w-full grid grid-cols-1 gap-3 px-0">
+                          {quickChips.map((chip, idx) => (
+                            <motion.button
+                              key={idx}
+                              initial={{ opacity: 0, y: 10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ delay: idx * 0.05 }}
+                              onClick={() => submitQuery(chip)}
+                              className="text-left p-4 rounded-xl border border-border-custom bg-background-primary hover:bg-background-secondary transition-all hover:border-[var(--accent)] cursor-pointer group"
+                            >
+                              <div className="font-semibold text-sm text-text-primary group-hover:text-[var(--accent)]">
+                                {chip}
+                              </div>
+                              <div className="text-xs text-text-secondary mt-1">
+                                Try this example
+                              </div>
+                            </motion.button>
+                          ))}
                         </div>
-                        {/* Desktop: original relative layout */}
-                        <div className="hidden md:block relative">
-                          <input
-                            type="text"
-                            placeholder={t('askPlaceholder')}
-                            value={input}
-                            onChange={(e) => setInput(e.target.value)}
-                            disabled={loading}
-                            autoFocus
-                            className="w-full px-6 py-4 rounded-2xl border-2 border-border-custom bg-background-secondary text-sm focus:outline-none focus:border-[var(--accent)] transition-all shadow-sm"
-                            style={{ '--tw-ring-color': 'var(--accent)' }}
-                          />
-                          <button
-                            type="submit"
-                            disabled={loading || !input.trim()}
-                            className="absolute right-3 top-1/2 -translate-y-1/2 px-5 py-2 rounded-xl font-bold text-sm transition-all disabled:opacity-50 cursor-pointer"
-                            style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}
-                          >
-                            {t('solve')}
-                          </button>
-                        </div>
-                      </form>
+
+                        {/* Desktop Original Prompt Input */}
+                        <form
+                          onSubmit={handleSend}
+                          className="w-full mb-8"
+                        >
+                          <div className="relative">
+                            <input
+                              type="text"
+                              placeholder={t('askPlaceholder')}
+                              value={input}
+                              onChange={(e) => setInput(e.target.value)}
+                              disabled={loading}
+                              autoFocus
+                              className="w-full px-6 py-4 rounded-2xl border-2 border-border-custom bg-background-secondary text-sm focus:outline-none focus:border-[var(--accent)] transition-all shadow-sm"
+                              style={{ '--tw-ring-color': 'var(--accent)' }}
+                            />
+                            <button
+                              type="submit"
+                              disabled={loading || !input.trim()}
+                              className="absolute right-3 top-1/2 -translate-y-1/2 px-5 py-2 rounded-xl font-bold text-sm transition-all disabled:opacity-50 cursor-pointer"
+                              style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}
+                            >
+                              {t('solve')}
+                            </button>
+                          </div>
+                        </form>
+                      </div>
                     </div>
+
+                    {/* Mobile Fixed Bottom Input (Initial State) */}
+                    <form
+                      onSubmit={handleSend}
+                      className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-background-secondary border-t border-border-custom p-3"
+                    >
+                      <div className="max-w-2xl mx-auto flex items-center gap-2 bg-background-primary rounded-2xl border border-border-custom px-3 py-2">
+                        <input
+                          type="text"
+                          placeholder={t('askPlaceholder')}
+                          value={input}
+                          onChange={(e) => setInput(e.target.value)}
+                          disabled={loading}
+                          autoFocus
+                          className="flex-grow bg-transparent border-none text-sm focus:outline-none"
+                        />
+                        <button
+                          type="submit"
+                          disabled={loading || !input.trim()}
+                          className="p-2 rounded-xl transition-all disabled:opacity-50 cursor-pointer"
+                          style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}
+                        >
+                          <ArrowRight size={18} />
+                        </button>
+                      </div>
+                    </form>
                   </motion.div>
                 ) : (
                   <motion.div
@@ -1029,8 +1057,8 @@ const ChatWorkspace = () => {
                     transition={{ duration: 0.3 }}
                     className="flex-1 flex flex-col"
                   >
-                    {/* Message List */}
-                    <div className="flex-1 overflow-y-auto px-6 py-6 space-y-6 scrollbar-thin">
+                    {/* Message List (Add padding bottom for mobile fixed input) */}
+                    <div className="flex-1 overflow-y-auto px-6 py-6 space-y-6 scrollbar-thin pb-20 md:pb-6">
                       {messages.map((msg) => (
                         <motion.div
                           key={msg.id}
@@ -1116,8 +1144,8 @@ const ChatWorkspace = () => {
                       <div ref={messagesEndRef} />
                     </div>
 
-                    {/* Bottom Input */}
-                    <div className="p-3 md:p-5 border-t border-border-custom bg-background-secondary">
+                    {/* Desktop Bottom Input (Keep Original) */}
+                    <div className="hidden md:block p-3 md:p-5 border-t border-border-custom bg-background-secondary">
                       <form onSubmit={handleSend} className="flex gap-2 md:gap-3 items-center max-w-4xl mx-auto px-1">
                         <input
                           type="text"
@@ -1148,6 +1176,31 @@ const ChatWorkspace = () => {
                         ))}
                       </div>
                     </div>
+
+                    {/* Mobile Fixed Bottom Input (Conversation Mode) */}
+                    <form
+                      onSubmit={handleSend}
+                      className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-background-secondary border-t border-border-custom p-3"
+                    >
+                      <div className="max-w-2xl mx-auto flex items-center gap-2 bg-background-primary rounded-2xl border border-border-custom px-3 py-2">
+                        <input
+                          type="text"
+                          placeholder={t('askPlaceholder')}
+                          value={input}
+                          onChange={(e) => setInput(e.target.value)}
+                          disabled={loading}
+                          className="flex-grow bg-transparent border-none text-sm focus:outline-none"
+                        />
+                        <button
+                          type="submit"
+                          disabled={loading || !input.trim()}
+                          className="p-2 rounded-xl transition-all disabled:opacity-50 cursor-pointer"
+                          style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}
+                        >
+                          <ArrowRight size={18} />
+                        </button>
+                      </div>
+                    </form>
                   </motion.div>
                 )}
               </AnimatePresence>
