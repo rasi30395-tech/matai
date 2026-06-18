@@ -951,7 +951,7 @@ const ChatWorkspace = () => {
 
                     <div className="flex flex-col md:flex-col-reverse w-full max-w-2xl">
                       {/* Suggested Prompt Cards */}
-                      <div className="w-full grid grid-cols-1 gap-3 px-2 md:px-0 md:mb-0">
+                      <div className="w-full grid grid-cols-1 gap-3 px-2 md:px-0">
                         {quickChips.map((chip, idx) => (
                           <motion.button
                             key={idx}
@@ -974,31 +974,49 @@ const ChatWorkspace = () => {
                       {/* Prompt Input */}
                       <form
                         onSubmit={handleSend}
-                        className="w-full mb-8 md:mb-8"
+                        className="w-full mb-8"
                       >
                         {/* Mobile: flex layout */}
-                        <div className="flex flex-col gap-2 md:block">
-                          {/* Desktop: relative with absolute button */}
-                          <div className="md:relative">
-                            <input
-                              type="text"
-                              placeholder={t('askPlaceholder')}
-                              value={input}
-                              onChange={(e) => setInput(e.target.value)}
-                              disabled={loading}
-                              autoFocus
-                              className="w-full px-4 py-3 md:px-6 md:py-4 rounded-2xl border-2 border-border-custom bg-background-secondary text-sm focus:outline-none focus:border-[var(--accent)] transition-all shadow-sm md:pr-24"
-                              style={{ '--tw-ring-color': 'var(--accent)' }}
-                            />
-                            <button
-                              type="submit"
-                              disabled={loading || !input.trim()}
-                              className="w-full md:absolute md:right-3 md:top-1/2 md:-translate-y-1/2 px-4 md:px-5 py-2 md:py-2 rounded-xl font-bold text-sm transition-all disabled:opacity-50 cursor-pointer"
-                              style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}
-                            >
-                              {t('solve')}
-                            </button>
-                          </div>
+                        <div className="flex flex-col gap-2 md:hidden">
+                          <input
+                            type="text"
+                            placeholder={t('askPlaceholder')}
+                            value={input}
+                            onChange={(e) => setInput(e.target.value)}
+                            disabled={loading}
+                            autoFocus
+                            className="w-full px-4 py-3 rounded-2xl border-2 border-border-custom bg-background-secondary text-sm focus:outline-none focus:border-[var(--accent)] transition-all shadow-sm"
+                            style={{ '--tw-ring-color': 'var(--accent)' }}
+                          />
+                          <button
+                            type="submit"
+                            disabled={loading || !input.trim()}
+                            className="w-full px-4 py-2 rounded-xl font-bold text-sm transition-all disabled:opacity-50 cursor-pointer"
+                            style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}
+                          >
+                            {t('solve')}
+                          </button>
+                        </div>
+                        {/* Desktop: original relative layout */}
+                        <div className="hidden md:block relative">
+                          <input
+                            type="text"
+                            placeholder={t('askPlaceholder')}
+                            value={input}
+                            onChange={(e) => setInput(e.target.value)}
+                            disabled={loading}
+                            autoFocus
+                            className="w-full px-6 py-4 rounded-2xl border-2 border-border-custom bg-background-secondary text-sm focus:outline-none focus:border-[var(--accent)] transition-all shadow-sm"
+                            style={{ '--tw-ring-color': 'var(--accent)' }}
+                          />
+                          <button
+                            type="submit"
+                            disabled={loading || !input.trim()}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 px-5 py-2 rounded-xl font-bold text-sm transition-all disabled:opacity-50 cursor-pointer"
+                            style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}
+                          >
+                            {t('solve')}
+                          </button>
                         </div>
                       </form>
                     </div>
