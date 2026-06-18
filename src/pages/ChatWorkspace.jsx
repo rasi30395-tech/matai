@@ -1152,7 +1152,7 @@ const ChatWorkspace = () => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.3 }}
-                    className="flex-1 flex flex-col"
+                    className="flex-1 flex flex-col min-h-0"
                   >
                     {/* Message List (Add padding bottom for mobile fixed input) */}
                     <div className="flex-1 overflow-y-auto px-6 py-6 space-y-6 scrollbar-thin pb-20 md:pb-24 min-h-0">
