@@ -1133,7 +1133,7 @@ const ChatWorkspace = () => {
                     className="flex-1 flex flex-col"
                   >
                     {/* Message List (Add padding bottom for mobile fixed input) */}
-                    <div className="flex-1 overflow-y-auto px-6 py-6 space-y-6 scrollbar-thin pb-20 md:pb-6">
+                    <div className="flex-1 overflow-y-auto px-6 py-6 space-y-6 scrollbar-thin pb-20 md:pb-24">
                       {messages.map((msg) => (
                         <motion.div
                           key={msg.id}
@@ -1219,8 +1219,8 @@ const ChatWorkspace = () => {
                       <div ref={messagesEndRef} />
                     </div>
 
-                    {/* Desktop Bottom Input (Keep Original) */}
-                    <div className="hidden md:block p-3 md:p-5 border-t border-border-custom bg-background-secondary">
+                    {/* Desktop Bottom Fixed Input */}
+                    <div className="hidden md:block fixed bottom-0 left-64 right-80 z-20 bg-background-primary border-t border-border-custom p-3 md:p-5">
                       <form onSubmit={handleSend} className="flex gap-2 md:gap-3 items-center max-w-4xl mx-auto px-1">
                         <input
                           type="file"
