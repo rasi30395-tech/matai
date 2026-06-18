@@ -1047,7 +1047,7 @@ const ChatWorkspace = () => {
                               onChange={(e) => setInput(e.target.value)}
                               disabled={loading}
                               autoFocus
-                              className="flex-grow bg-transparent border-none text-sm focus:outline-none"
+                              className="flex-grow bg-transparent border-none text-sm focus:outline-none placeholder:text-text-secondary/60"
                             />
                             {selectedFile && (
                               <div className="text-xs text-text-secondary px-2 py-1 bg-background-primary rounded-lg">
@@ -1106,7 +1106,7 @@ const ChatWorkspace = () => {
                           onChange={(e) => setInput(e.target.value)}
                           disabled={loading}
                           autoFocus
-                          className="flex-grow bg-transparent border-none text-sm focus:outline-none"
+                          className="flex-grow bg-transparent border-none text-sm focus:outline-none placeholder:text-text-secondary/60"
                         />
                         {selectedFile && (
                           <div className="text-xs text-text-secondary px-2 py-1 bg-background-primary rounded-lg">
@@ -1248,7 +1248,7 @@ const ChatWorkspace = () => {
                           value={input}
                           onChange={(e) => setInput(e.target.value)}
                           disabled={loading}
-                          className="flex-grow px-3 md:px-5 py-2.5 md:py-3 rounded-2xl border border-border-custom bg-background-primary text-sm focus:outline-none focus:border-[var(--accent)] transition-all"
+                          className="flex-grow px-3 md:px-5 py-2.5 md:py-3 rounded-2xl border border-border-custom bg-background-primary text-sm focus:outline-none focus:border-[var(--accent)] transition-all placeholder:text-text-secondary/60"
                         />
                         {selectedFile && (
                           <div className="text-xs text-text-secondary px-2 py-1 bg-background-primary rounded-lg border border-border-custom">
@@ -1303,7 +1303,7 @@ const ChatWorkspace = () => {
                           value={input}
                           onChange={(e) => setInput(e.target.value)}
                           disabled={loading}
-                          className="flex-grow bg-transparent border-none text-sm focus:outline-none"
+                          className="flex-grow bg-transparent border-none text-sm focus:outline-none placeholder:text-text-secondary/60"
                         />
                         {selectedFile && (
                           <div className="text-xs text-text-secondary px-2 py-1 bg-background-primary rounded-lg">
