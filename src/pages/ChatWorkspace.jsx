@@ -1026,9 +1026,9 @@ const ChatWorkspace = () => {
                     {/* Mobile Fixed Bottom Input (Initial State) */}
                     <form
                       onSubmit={handleSend}
-                      className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-background-secondary border-t border-border-custom p-3"
+                      className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-background-primary/80 backdrop-blur-md border-t border-border-custom p-3"
                     >
-                      <div className="max-w-2xl mx-auto flex items-center gap-2 bg-background-primary rounded-2xl border border-border-custom px-3 py-2">
+                      <div className="max-w-2xl mx-auto flex items-center gap-2 bg-background-secondary rounded-full px-4 py-3 shadow-sm">
                         <input
                           type="text"
                           placeholder="Ask a math problem"
@@ -1041,7 +1041,7 @@ const ChatWorkspace = () => {
                         <button
                           type="submit"
                           disabled={loading || !input.trim()}
-                          className="p-2 rounded-xl transition-all disabled:opacity-50 cursor-pointer"
+                          className="p-2 rounded-full transition-all disabled:opacity-50 cursor-pointer"
                           style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}
                         >
                           <ArrowRight size={18} />
@@ -1180,9 +1180,9 @@ const ChatWorkspace = () => {
                     {/* Mobile Fixed Bottom Input (Conversation Mode) */}
                     <form
                       onSubmit={handleSend}
-                      className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-background-secondary border-t border-border-custom p-3"
+                      className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-background-primary/80 backdrop-blur-md border-t border-border-custom p-3"
                     >
-                      <div className="max-w-2xl mx-auto flex items-center gap-2 bg-background-primary rounded-2xl border border-border-custom px-3 py-2">
+                      <div className="max-w-2xl mx-auto flex items-center gap-2 bg-background-secondary rounded-full px-4 py-3 shadow-sm">
                         <input
                           type="text"
                           placeholder="Ask a math problem"
@@ -1194,7 +1194,7 @@ const ChatWorkspace = () => {
                         <button
                           type="submit"
                           disabled={loading || !input.trim()}
-                          className="p-2 rounded-xl transition-all disabled:opacity-50 cursor-pointer"
+                          className="p-2 rounded-full transition-all disabled:opacity-50 cursor-pointer"
                           style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}
                         >
                           <ArrowRight size={18} />
