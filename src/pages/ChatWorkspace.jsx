@@ -916,7 +916,7 @@ const ChatWorkspace = () => {
 
       {/* COLUMN 2: MAIN VIEW WORKSPACE */}
       <section className="flex-1 border-r border-border-custom flex flex-col h-screen overflow-hidden bg-background-primary">
-        <header className="p-4 border-b border-border-custom flex items-center justify-between bg-background-secondary md:static sticky top-0 z-20">
+        <header className="px-4 py-2.5 border-b border-border-custom flex items-center justify-between bg-background-primary md:static sticky top-0 z-20">
           <div className="flex items-center space-x-3">
             {/* Mobile Sidebar Toggle */}
             <button
@@ -928,7 +928,7 @@ const ChatWorkspace = () => {
             <span className="font-mono text-xs font-bold text-text-primary border border-border-custom px-2 py-0.5 rounded" style={{ backgroundColor: 'var(--accent-light)' }}>
               {activeView.toUpperCase()} VIEW
             </span>
-            <span className="text-[11px] text-text-secondary font-medium">{t('mathEngine')}</span>
+            <span className="hidden md:inline text-[11px] text-text-secondary font-medium">{t('mathEngine')}</span>
           </div>
           <div className="flex items-center space-x-2 text-[10px] font-mono text-text-secondary">
             {/* Right Panel Toggle for Mobile/Tablet */}
