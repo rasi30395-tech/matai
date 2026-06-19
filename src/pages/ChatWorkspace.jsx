@@ -1026,19 +1026,19 @@ const ChatWorkspace = () => {
                           onSubmit={handleSend}
                           className="w-full mb-8"
                         >
-                          <div className="flex items-end gap-2 bg-background-primary rounded-2xl px-4 py-3 shadow-sm border border-border-custom w-full max-w-[900px] mx-auto">
+                          <div className="prompt-container flex items-center gap-1.5 w-full max-w-[900px] mx-auto">
                             {/* Left Plus Icon */}
                             <button
                               type="button"
                               onClick={handleFileClick}
-                              className="p-2.5 text-text-secondary hover:text-text-primary transition-all cursor-pointer flex-shrink-0"
+                              className="prompt-action-btn cursor-pointer"
                             >
                               <Plus size={20} />
                             </button>
 
                             {/* File Preview (if any) */}
                             {selectedFile && (
-                              <div className="flex items-center gap-2 bg-background-secondary rounded-xl px-3 py-1.5 flex-shrink-0">
+                              <div className="prompt-file-chip">
                                 <File size={14} className="text-text-secondary" />
                                 <span className="text-xs text-text-secondary truncate max-w-[150px]">{selectedFile.name}</span>
                                 <button
@@ -1059,14 +1059,14 @@ const ChatWorkspace = () => {
                               disabled={loading}
                               autoFocus
                               rows={1}
-                              className="flex-1 bg-transparent border-none text-base focus:outline-none resize-none overflow-hidden min-h-[24px] max-h-[160px]"
+                              className="prompt-input flex-1 text-base resize-none overflow-hidden min-h-[24px] max-h-[160px] py-2"
                             />
 
                             {/* Mic Button */}
                             <button
                               type="button"
                               onClick={handleVoiceClick}
-                              className="p-2.5 text-text-secondary hover:text-text-primary transition-all cursor-pointer flex-shrink-0"
+                              className="prompt-action-btn cursor-pointer"
                             >
                               <Mic size={20} />
                             </button>
@@ -1075,8 +1075,7 @@ const ChatWorkspace = () => {
                             <button
                               type="submit"
                               disabled={loading || !input.trim()}
-                              className="p-2.5 rounded-full transition-all disabled:opacity-50 cursor-pointer flex-shrink-0 shadow-md"
-                              style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}
+                              className="prompt-send-btn cursor-pointer"
                             >
                               {loading ? (
                                 <motion.div
@@ -1103,7 +1102,7 @@ const ChatWorkspace = () => {
                     {/* Mobile Fixed Bottom Input (Initial State) */}
                     <form
                       onSubmit={handleSend}
-                      className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-background-primary/80 backdrop-blur-md border-t border-border-custom p-3 pb-[calc(12px+env(safe-area-inset-bottom))]"
+                      className="md:hidden fixed bottom-0 left-0 right-0 z-30 prompt-mobile-wrapper"
                     >
                       <input
                         type="file"
@@ -1111,19 +1110,19 @@ const ChatWorkspace = () => {
                         onChange={handleFileChange}
                         className="hidden"
                       />
-                      <div className="max-w-2xl mx-auto flex items-center gap-2 bg-background-primary rounded-2xl px-3 py-3 shadow-sm border border-border-custom w-full">
+                      <div className="prompt-container max-w-2xl mx-auto flex items-center gap-1.5 w-full">
                         {/* Left Plus Icon */}
                         <button
                           type="button"
                           onClick={handleFileClick}
-                          className="p-2 text-text-secondary hover:text-text-primary transition-all cursor-pointer flex-shrink-0"
+                          className="prompt-action-btn cursor-pointer"
                         >
                           <Plus size={22} />
                         </button>
 
                         {/* File Preview (if any) */}
                         {selectedFile && (
-                          <div className="flex items-center gap-2 bg-background-secondary rounded-xl px-3 py-1.5 flex-shrink-0">
+                          <div className="prompt-file-chip">
                             <File size={14} className="text-text-secondary" />
                             <span className="text-xs text-text-secondary truncate max-w-[150px]">{selectedFile.name}</span>
                             <button
@@ -1144,14 +1143,14 @@ const ChatWorkspace = () => {
                           onChange={(e) => setInput(e.target.value)}
                           disabled={loading}
                           autoFocus
-                          className="flex-1 bg-transparent border-none text-base focus:outline-none"
+                          className="prompt-input flex-1 text-base py-2"
                         />
 
                         {/* Mic Button */}
                         <button
                           type="button"
                           onClick={handleVoiceClick}
-                          className="p-2 text-text-secondary hover:text-text-primary transition-all cursor-pointer flex-shrink-0"
+                          className="prompt-action-btn cursor-pointer"
                         >
                           <Mic size={20} />
                         </button>
@@ -1160,8 +1159,7 @@ const ChatWorkspace = () => {
                         <button
                           type="submit"
                           disabled={loading || !input.trim()}
-                          className="p-2.5 rounded-full transition-all disabled:opacity-50 cursor-pointer flex-shrink-0"
-                          style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}
+                          className="prompt-send-btn cursor-pointer"
                         >
                           {loading ? (
                             <motion.div
@@ -1273,7 +1271,7 @@ const ChatWorkspace = () => {
                     </div>
 
                     {/* Desktop Bottom Sticky Input */}
-                    <div className="hidden md:block sticky bottom-0 z-20 bg-background-primary border-t border-border-custom p-3 md:p-5">
+                    <div className="hidden md:block sticky bottom-0 z-20 prompt-sticky-wrapper">
                       <form onSubmit={handleSend} className="max-w-4xl mx-auto px-1">
                         <input
                           type="file"
@@ -1281,19 +1279,19 @@ const ChatWorkspace = () => {
                           onChange={handleFileChange}
                           className="hidden"
                         />
-                        <div className="flex items-center gap-2 bg-background-primary rounded-2xl px-3 py-3 shadow-sm border border-border-custom w-full">
+                        <div className="prompt-container flex items-center gap-1.5 w-full">
                           {/* Left Plus Icon */}
                           <button
                             type="button"
                             onClick={handleFileClick}
-                            className="p-2 text-text-secondary hover:text-text-primary transition-all cursor-pointer flex-shrink-0"
+                            className="prompt-action-btn cursor-pointer"
                           >
                             <Plus size={22} />
                           </button>
 
                           {/* File Preview (if any) */}
                           {selectedFile && (
-                            <div className="flex items-center gap-2 bg-background-secondary rounded-xl px-3 py-1.5 flex-shrink-0">
+                            <div className="prompt-file-chip">
                               <File size={14} className="text-text-secondary" />
                               <span className="text-xs text-text-secondary truncate max-w-[150px]">{selectedFile.name}</span>
                               <button
@@ -1313,14 +1311,14 @@ const ChatWorkspace = () => {
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             disabled={loading}
-                            className="flex-1 bg-transparent border-none text-base focus:outline-none"
+                            className="prompt-input flex-1 text-base py-2"
                           />
 
                           {/* Mic Button */}
                           <button
                             type="button"
                             onClick={handleVoiceClick}
-                            className="p-2 text-text-secondary hover:text-text-primary transition-all cursor-pointer flex-shrink-0"
+                            className="prompt-action-btn cursor-pointer"
                           >
                             <Mic size={20} />
                           </button>
@@ -1329,8 +1327,7 @@ const ChatWorkspace = () => {
                           <button
                             type="submit"
                             disabled={loading || !input.trim()}
-                            className="p-2.5 rounded-full transition-all disabled:opacity-50 cursor-pointer flex-shrink-0"
-                            style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}
+                            className="prompt-send-btn cursor-pointer"
                           >
                             {loading ? (
                               <motion.div
@@ -1361,21 +1358,21 @@ const ChatWorkspace = () => {
                     {/* Mobile Fixed Bottom Input (Conversation Mode) */}
                     <form
                       onSubmit={handleSend}
-                      className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-background-primary/80 backdrop-blur-md border-t border-border-custom p-3 pb-[calc(12px+env(safe-area-inset-bottom))]"
+                      className="md:hidden fixed bottom-0 left-0 right-0 z-30 prompt-mobile-wrapper"
                     >
-                      <div className="max-w-2xl mx-auto flex items-center gap-2 bg-background-primary rounded-2xl px-3 py-3 shadow-sm border border-border-custom w-full">
+                      <div className="prompt-container max-w-2xl mx-auto flex items-center gap-1.5 w-full">
                         {/* Left Plus Icon */}
                         <button
                           type="button"
                           onClick={handleFileClick}
-                          className="p-2 text-text-secondary hover:text-text-primary transition-all cursor-pointer flex-shrink-0"
+                          className="prompt-action-btn cursor-pointer"
                         >
                           <Plus size={22} />
                         </button>
 
                         {/* File Preview (if any) */}
                         {selectedFile && (
-                          <div className="flex items-center gap-2 bg-background-secondary rounded-xl px-3 py-1.5 flex-shrink-0">
+                          <div className="prompt-file-chip">
                             <File size={14} className="text-text-secondary" />
                             <span className="text-xs text-text-secondary truncate max-w-[150px]">{selectedFile.name}</span>
                             <button
@@ -1395,14 +1392,14 @@ const ChatWorkspace = () => {
                           value={input}
                           onChange={(e) => setInput(e.target.value)}
                           disabled={loading}
-                          className="flex-1 bg-transparent border-none text-base focus:outline-none"
+                          className="prompt-input flex-1 text-base py-2"
                         />
 
                         {/* Mic Button */}
                         <button
                           type="button"
                           onClick={handleVoiceClick}
-                          className="p-2 text-text-secondary hover:text-text-primary transition-all cursor-pointer flex-shrink-0"
+                          className="prompt-action-btn cursor-pointer"
                         >
                           <Mic size={20} />
                         </button>
@@ -1411,8 +1408,7 @@ const ChatWorkspace = () => {
                         <button
                           type="submit"
                           disabled={loading || !input.trim()}
-                          className="p-2.5 rounded-full transition-all disabled:opacity-50 cursor-pointer flex-shrink-0"
-                          style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}
+                          className="prompt-send-btn cursor-pointer"
                         >
                           {loading ? (
                             <motion.div
