@@ -1026,19 +1026,19 @@ const ChatWorkspace = () => {
                           onSubmit={handleSend}
                           className="w-full mb-8"
                         >
-                          <div className="flex items-center gap-2 bg-background-secondary rounded-2xl px-3 py-3 shadow-lg border border-border-custom w-full">
+                          <div className="flex items-end gap-2 bg-background-primary rounded-2xl px-4 py-3 shadow-sm border border-border-custom w-full max-w-[900px] mx-auto">
                             {/* Left Plus Icon */}
                             <button
                               type="button"
                               onClick={handleFileClick}
-                              className="p-2 text-text-secondary hover:text-text-primary transition-all cursor-pointer flex-shrink-0"
+                              className="p-2.5 text-text-secondary hover:text-text-primary transition-all cursor-pointer flex-shrink-0"
                             >
-                              <Plus size={22} />
+                              <Plus size={20} />
                             </button>
 
                             {/* File Preview (if any) */}
                             {selectedFile && (
-                              <div className="flex items-center gap-2 bg-background-primary rounded-xl px-3 py-1.5 flex-shrink-0">
+                              <div className="flex items-center gap-2 bg-background-secondary rounded-xl px-3 py-1.5 flex-shrink-0">
                                 <File size={14} className="text-text-secondary" />
                                 <span className="text-xs text-text-secondary truncate max-w-[150px]">{selectedFile.name}</span>
                                 <button
@@ -1051,22 +1051,22 @@ const ChatWorkspace = () => {
                               </div>
                             )}
 
-                            {/* Main Input */}
-                            <input
-                              type="text"
+                            {/* Main Textarea */}
+                            <textarea
                               placeholder="Ask anything"
                               value={input}
                               onChange={(e) => setInput(e.target.value)}
                               disabled={loading}
                               autoFocus
-                              className="flex-1 bg-transparent border-none text-base focus:outline-none placeholder:text-text-secondary/50"
+                              rows={1}
+                              className="flex-1 bg-transparent border-none text-base focus:outline-none resize-none overflow-hidden min-h-[24px] max-h-[160px]"
                             />
 
                             {/* Mic Button */}
                             <button
                               type="button"
                               onClick={handleVoiceClick}
-                              className="p-2 text-text-secondary hover:text-text-primary transition-all cursor-pointer flex-shrink-0"
+                              className="p-2.5 text-text-secondary hover:text-text-primary transition-all cursor-pointer flex-shrink-0"
                             >
                               <Mic size={20} />
                             </button>
@@ -1075,7 +1075,7 @@ const ChatWorkspace = () => {
                             <button
                               type="submit"
                               disabled={loading || !input.trim()}
-                              className="p-2.5 rounded-full transition-all disabled:opacity-50 cursor-pointer flex-shrink-0"
+                              className="p-2.5 rounded-full transition-all disabled:opacity-50 cursor-pointer flex-shrink-0 shadow-md"
                               style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}
                             >
                               {loading ? (
@@ -1111,7 +1111,7 @@ const ChatWorkspace = () => {
                         onChange={handleFileChange}
                         className="hidden"
                       />
-                      <div className="max-w-2xl mx-auto flex items-center gap-2 bg-background-secondary rounded-2xl px-3 py-3 shadow-lg border border-border-custom w-full">
+                      <div className="max-w-2xl mx-auto flex items-center gap-2 bg-background-primary rounded-2xl px-3 py-3 shadow-sm border border-border-custom w-full">
                         {/* Left Plus Icon */}
                         <button
                           type="button"
@@ -1123,7 +1123,7 @@ const ChatWorkspace = () => {
 
                         {/* File Preview (if any) */}
                         {selectedFile && (
-                          <div className="flex items-center gap-2 bg-background-primary rounded-xl px-3 py-1.5 flex-shrink-0">
+                          <div className="flex items-center gap-2 bg-background-secondary rounded-xl px-3 py-1.5 flex-shrink-0">
                             <File size={14} className="text-text-secondary" />
                             <span className="text-xs text-text-secondary truncate max-w-[150px]">{selectedFile.name}</span>
                             <button
@@ -1144,7 +1144,7 @@ const ChatWorkspace = () => {
                           onChange={(e) => setInput(e.target.value)}
                           disabled={loading}
                           autoFocus
-                          className="flex-1 bg-transparent border-none text-base focus:outline-none placeholder:text-text-secondary/50"
+                          className="flex-1 bg-transparent border-none text-base focus:outline-none"
                         />
 
                         {/* Mic Button */}
@@ -1281,7 +1281,7 @@ const ChatWorkspace = () => {
                           onChange={handleFileChange}
                           className="hidden"
                         />
-                        <div className="flex items-center gap-2 bg-background-secondary rounded-2xl px-3 py-3 shadow-lg border border-border-custom w-full">
+                        <div className="flex items-center gap-2 bg-background-primary rounded-2xl px-3 py-3 shadow-sm border border-border-custom w-full">
                           {/* Left Plus Icon */}
                           <button
                             type="button"
@@ -1293,7 +1293,7 @@ const ChatWorkspace = () => {
 
                           {/* File Preview (if any) */}
                           {selectedFile && (
-                            <div className="flex items-center gap-2 bg-background-primary rounded-xl px-3 py-1.5 flex-shrink-0">
+                            <div className="flex items-center gap-2 bg-background-secondary rounded-xl px-3 py-1.5 flex-shrink-0">
                               <File size={14} className="text-text-secondary" />
                               <span className="text-xs text-text-secondary truncate max-w-[150px]">{selectedFile.name}</span>
                               <button
@@ -1313,7 +1313,7 @@ const ChatWorkspace = () => {
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             disabled={loading}
-                            className="flex-1 bg-transparent border-none text-base focus:outline-none placeholder:text-text-secondary/50"
+                            className="flex-1 bg-transparent border-none text-base focus:outline-none"
                           />
 
                           {/* Mic Button */}
@@ -1350,7 +1350,7 @@ const ChatWorkspace = () => {
                           <button
                             key={idx}
                             onClick={() => setInput(chip + " ")}
-                            className="px-2 md:px-3 py-1 md:py-1.5 rounded-lg bg-background-primary hover:bg-border-custom/40 border border-border-custom transition-all text-[10px] md:text-[11px] font-medium text-text-secondary hover:text-text-primary cursor-pointer"
+                            className="px-2 md:px-3 py-1 md:py-1.5 rounded-lg bg-background-secondary hover:bg-border-custom/40 border border-border-custom transition-all text-[10px] md:text-[11px] font-medium text-text-secondary hover:text-text-primary cursor-pointer"
                           >
                             {chip}
                           </button>
@@ -1363,7 +1363,7 @@ const ChatWorkspace = () => {
                       onSubmit={handleSend}
                       className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-background-primary/80 backdrop-blur-md border-t border-border-custom p-3 pb-[calc(12px+env(safe-area-inset-bottom))]"
                     >
-                      <div className="max-w-2xl mx-auto flex items-center gap-2 bg-background-secondary rounded-2xl px-3 py-3 shadow-lg border border-border-custom w-full">
+                      <div className="max-w-2xl mx-auto flex items-center gap-2 bg-background-primary rounded-2xl px-3 py-3 shadow-sm border border-border-custom w-full">
                         {/* Left Plus Icon */}
                         <button
                           type="button"
@@ -1375,7 +1375,7 @@ const ChatWorkspace = () => {
 
                         {/* File Preview (if any) */}
                         {selectedFile && (
-                          <div className="flex items-center gap-2 bg-background-primary rounded-xl px-3 py-1.5 flex-shrink-0">
+                          <div className="flex items-center gap-2 bg-background-secondary rounded-xl px-3 py-1.5 flex-shrink-0">
                             <File size={14} className="text-text-secondary" />
                             <span className="text-xs text-text-secondary truncate max-w-[150px]">{selectedFile.name}</span>
                             <button
@@ -1395,7 +1395,7 @@ const ChatWorkspace = () => {
                           value={input}
                           onChange={(e) => setInput(e.target.value)}
                           disabled={loading}
-                          className="flex-1 bg-transparent border-none text-base focus:outline-none placeholder:text-text-secondary/50"
+                          className="flex-1 bg-transparent border-none text-base focus:outline-none"
                         />
 
                         {/* Mic Button */}
