@@ -270,6 +270,10 @@ input[type="checkbox"] {
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(0, 0, 0, 0.02);
   transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
   padding: 8px 12px;
+  box-sizing: border-box;
+  max-width: 100%;
+  width: 100%;
+  overflow: hidden;
 }
 
 .prompt-container:focus-within {
@@ -300,6 +304,8 @@ input[type="checkbox"] {
   border: none !important;
   box-shadow: none !important;
   outline: none !important;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 /* Prompt action buttons */
@@ -309,6 +315,12 @@ input[type="checkbox"] {
   border-radius: 10px;
   padding: 8px;
   flex-shrink: 0;
+  min-width: 36px;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
 }
 
 .prompt-action-btn:hover {
@@ -327,6 +339,12 @@ input[type="checkbox"] {
   border-radius: 50%;
   padding: 9px;
   flex-shrink: 0;
+  min-width: 36px;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
   transition: opacity 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
 }
@@ -358,7 +376,10 @@ input[type="checkbox"] {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-top: 1px solid color-mix(in srgb, var(--border) 60%, transparent);
-  padding: 12px 12px calc(12px + env(safe-area-inset-bottom));
+  padding: 10px 10px calc(10px + env(safe-area-inset-bottom));
+  box-sizing: border-box;
+  max-width: 100vw;
+  overflow: hidden;
 }
 
 /* File preview chip inside prompt */
@@ -370,5 +391,248 @@ input[type="checkbox"] {
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 4px 10px;
-  flex-shrink: 0;
+  flex-shrink: 1;
+  min-width: 0;
+  max-width: 160px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.prompt-file-chip > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+/* ============================================
+   MOBILE RESPONSIVENESS — Prompt Box Only
+   ============================================
+   Target widths: 320px, 360px, 375px, 390px,
+   412px, 430px
+   Devices: iPhone SE → Pro Max, Samsung Galaxy,
+   Pixel, Redmi, Realme, Vivo, Oppo
+   ============================================ */
+
+/* ---- Universal mobile prompt box hardening ---- */
+.prompt-container,
+.prompt-container *,
+.prompt-mobile-wrapper,
+.prompt-mobile-wrapper * {
+  box-sizing: border-box;
+}
+
+/* ---- Tablets and below (≤768px) ---- */
+@media (max-width: 768px) {
+  .prompt-container {
+    padding: 6px 10px;
+    border-radius: 20px;
+    gap: 4px;
+    max-width: 100%;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .prompt-action-btn {
+    padding: 8px;
+    min-width: 40px;
+    min-height: 40px;
+    border-radius: 10px;
+    flex-shrink: 0;
+  }
+
+  .prompt-send-btn {
+    padding: 8px;
+    min-width: 40px;
+    min-height: 40px;
+    flex-shrink: 0;
+  }
+
+  .prompt-input {
+    font-size: 16px; /* prevents iOS auto-zoom on focus */
+    min-width: 0;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .prompt-file-chip {
+    max-width: 120px;
+    padding: 3px 8px;
+    flex-shrink: 1;
+    min-width: 0;
+  }
+
+  .prompt-mobile-wrapper {
+    padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
+    max-width: 100vw;
+    width: 100%;
+    overflow: hidden;
+    left: 0;
+    right: 0;
+  }
+}
+
+/* ---- Standard phones ≤430px (iPhone Pro Max, Galaxy S24+) ---- */
+@media (max-width: 430px) {
+  .prompt-container {
+    padding: 6px 8px;
+    border-radius: 18px;
+    gap: 3px;
+  }
+
+  .prompt-action-btn {
+    padding: 7px;
+    min-width: 38px;
+    min-height: 38px;
+  }
+
+  .prompt-send-btn {
+    padding: 8px;
+    min-width: 38px;
+    min-height: 38px;
+  }
+
+  .prompt-mobile-wrapper {
+    padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+  }
+}
+
+/* ---- Mid-range phones ≤390px (iPhone 14/15, Pixel 7) ---- */
+@media (max-width: 390px) {
+  .prompt-container {
+    padding: 5px 7px;
+    border-radius: 16px;
+    gap: 2px;
+  }
+
+  .prompt-action-btn {
+    padding: 6px;
+    min-width: 36px;
+    min-height: 36px;
+    border-radius: 8px;
+  }
+
+  .prompt-send-btn {
+    padding: 7px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .prompt-file-chip {
+    max-width: 100px;
+    padding: 3px 6px;
+  }
+
+  .prompt-mobile-wrapper {
+    padding: 7px 8px calc(7px + env(safe-area-inset-bottom));
+  }
+}
+
+/* ---- Narrow phones ≤375px (iPhone SE 3rd gen, iPhone 13 mini) ---- */
+@media (max-width: 375px) {
+  .prompt-container {
+    padding: 5px 6px;
+    border-radius: 14px;
+    gap: 2px;
+  }
+
+  .prompt-action-btn {
+    padding: 6px;
+    min-width: 34px;
+    min-height: 34px;
+  }
+
+  .prompt-send-btn {
+    padding: 7px;
+    min-width: 34px;
+    min-height: 34px;
+  }
+
+  .prompt-file-chip {
+    max-width: 90px;
+    padding: 2px 6px;
+    gap: 4px;
+  }
+
+  .prompt-mobile-wrapper {
+    padding: 6px 6px calc(6px + env(safe-area-inset-bottom));
+  }
+}
+
+/* ---- Very narrow phones ≤360px (Galaxy A series, Redmi, Realme, older Vivo/Oppo) ---- */
+@media (max-width: 360px) {
+  .prompt-container {
+    padding: 4px 5px;
+    border-radius: 14px;
+    gap: 1px;
+  }
+
+  .prompt-action-btn {
+    padding: 5px;
+    min-width: 32px;
+    min-height: 32px;
+    border-radius: 8px;
+  }
+
+  .prompt-send-btn {
+    padding: 6px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .prompt-input {
+    font-size: 16px;
+  }
+
+  .prompt-file-chip {
+    max-width: 80px;
+    padding: 2px 5px;
+    gap: 3px;
+  }
+
+  .prompt-file-chip > span {
+    font-size: 10px;
+  }
+
+  .prompt-mobile-wrapper {
+    padding: 5px 5px calc(5px + env(safe-area-inset-bottom));
+  }
+}
+
+/* ---- Ultra-narrow ≤320px (iPhone SE 1st gen, Galaxy J2, old Redmi) ---- */
+@media (max-width: 320px) {
+  .prompt-container {
+    padding: 4px 4px;
+    border-radius: 12px;
+    gap: 1px;
+  }
+
+  .prompt-action-btn {
+    padding: 4px;
+    min-width: 30px;
+    min-height: 30px;
+  }
+
+  .prompt-send-btn {
+    padding: 5px;
+    min-width: 30px;
+    min-height: 30px;
+  }
+
+  .prompt-input {
+    font-size: 16px;
+  }
+
+  .prompt-file-chip {
+    max-width: 70px;
+    padding: 2px 4px;
+    gap: 2px;
+  }
+
+  .prompt-mobile-wrapper {
+    padding: 4px 4px calc(4px + env(safe-area-inset-bottom));
+  }
 }
