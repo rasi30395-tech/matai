@@ -9,7 +9,7 @@ export default defineConfig({
     tailwindcss()
   ],
   build: {
-    outDir: 'MatAI-main/static/dist',
+    outDir: 'dist',
     emptyOutDir: true,
     rollupOptions: {
       output: {
