@@ -24,25 +24,34 @@ MODEL = "llama3-70b-8192"
 #---------------------------------------------AGENT 5: SOLUTION AGENT------------------------------------------------------
 solution_explainer_prompt = PromptTemplate.from_template(
     """
-You are a highly skilled math teacher.
-
-### TASK:
-Explain the following math problem in clear, simple, and step-by-step format.
+You are a highly skilled math teacher. Explain the following math problem in clear, simple, and step-by-step format for school and college students. Avoid overly technical language and maintain an educational, teaching-oriented style.
 
 ### INPUT:
 {combined_input}
 
 ### INSTRUCTIONS:
-- Ignore any visual instructions or drawing hints.
-- Only focus on solving the problem description and step by step solution logically and mathematically.
-- Each step should be broken down with reasoning and intermediate calculations.
-- Format output like:
-  Step 1: ...
-  Step 2: ...
-  ...
-  Final Answer: ...
+For every mathematical problem, you MUST provide the following sections:
 
--also provide analogy explain the mathematical sum in an simple way that even a child can understand
+1. Problem Understanding
+- Briefly explain what is being asked in simple, student-friendly language.
+
+2. Formula Used
+- Show the math formula(s) used in the solution, utilizing KaTeX-compatible LaTeX syntax (e.g., using $$...$$ for display equations or $...$ for inline expressions).
+
+3. Step-by-Step Solution
+- Break down the solution into clear, numbered steps.
+- Explain each step clearly in simple student-friendly language with reasoning and intermediate calculations.
+
+4. Final Answer
+- Clearly highlight the final result.
+
+5. Alternative Method (if applicable)
+- Briefly show or describe an alternative way to solve it (e.g., graphing, factoring vs quadratic formula, etc.). If not applicable, write "Alternative Method: N/A".
+
+6. Key Concept
+- Provide a brief, student-friendly explanation of the key mathematical concept involved.
+
+Do not include any visual Manim instructions or drawing hints. Focus purely on the educational math solution.
 """
 )
 
@@ -105,10 +114,11 @@ def process_question(question):
 
 def solution_to_html(solution):
     prompt = f"""
-    you should do the given solution to html code 
-    just want <p> ,<li>,<ul> like this you wnt to give as a result
+    Convert the following mathematical solution into clean HTML format.
+    Keep the structured sections: "Problem Understanding", "Formula Used", "Step-by-Step Solution", "Final Answer", "Alternative Method", and "Key Concept".
+    Use standard HTML elements like <h4>, <p>, <ol>, <li>, <strong> to format the text and headings.
+    Do NOT add any styling, classes, custom colors, or preamble. Just return the clean HTML.
     
-    IMPORTENT : give only html code no other additional preamble i dont want that like "Here is the HTML code without preamble:" this also
     {solution}
     """
     response = ask_groq(prompt)

@@ -2,6 +2,63 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useGame } from '../context/GameContext';
+import katex from 'katex';
+
+// Helper function to render LaTeX expressions
+const renderWithLatex = (html) => {
+  if (!html) return '';
+  let processedHtml = html;
+  
+  // Replace block math: $$...$$ or \[...\]
+  processedHtml = processedHtml.replace(/\$\$([\s\S]+?)\$\$/g, (match, latex) => {
+    try {
+      return katex.renderToString(latex, {
+        throwOnError: false,
+        displayMode: true,
+      });
+    } catch (err) {
+      console.error('KaTeX error:', err);
+      return match;
+    }
+  });
+  processedHtml = processedHtml.replace(/\\\[([\s\S]+?)\\\]/g, (match, latex) => {
+    try {
+      return katex.renderToString(latex, {
+        throwOnError: false,
+        displayMode: true,
+      });
+    } catch (err) {
+      console.error('KaTeX error:', err);
+      return match;
+    }
+  });
+  
+  // Replace inline math: $...$ or \(...\)
+  processedHtml = processedHtml.replace(/\$([^\$]+?)\$/g, (match, latex) => {
+    try {
+      return katex.renderToString(latex, {
+        throwOnError: false,
+        displayMode: false,
+      });
+    } catch (err) {
+      console.error('KaTeX error:', err);
+      return match;
+    }
+  });
+  processedHtml = processedHtml.replace(/\\\(([\s\S]+?)\\\)/g, (match, latex) => {
+    try {
+      return katex.renderToString(latex, {
+        throwOnError: false,
+        displayMode: false,
+      });
+    } catch (err) {
+      console.error('KaTeX error:', err);
+      return match;
+    }
+  });
+  
+  return processedHtml;
+};
 import { 
   MessageSquare, Compass, HelpCircle, History, Bookmark, Award, 
   BarChart2, BookOpen, Layers, Settings, Plus, ChevronDown, ChevronRight, 
@@ -462,7 +519,37 @@ const ChatWorkspace = () => {
       } else { throw new Error('Fallback'); }
     } catch (err) {
       const localResult = mathEngineSolve(queryText);
-      const htmlOutput = `<div class="space-y-4"><p class="font-bold text-xs uppercase tracking-wide" style="color:var(--accent)">LOCAL AI SOLVER NODE Fallback</p><h4 class="font-bold text-sm text-text-primary">${localResult.overview}</h4><div class="p-3 border border-border-custom bg-background-secondary rounded-lg"><code class="font-mono text-xs text-text-primary">${localResult.formula}</code></div><div class="space-y-2"><h5 class="text-xs font-semibold text-text-secondary">Formula Derivations:</h5><ol class="list-decimal pl-4 space-y-1 text-xs text-text-secondary">${localResult.steps.map(s => `<li><strong>${s.title}</strong>: ${s.body}</li>`).join('')}</ol></div><div class="pt-2 border-t border-border-custom text-xs"><span class="text-text-secondary">Alternative Method:</span><p class="text-text-primary leading-relaxed">${localResult.alternative}</p></div><div class="pt-2 border-t border-border-custom text-xs"><span class="text-text-secondary">Concept:</span><span class="inline-block bg-background-secondary px-2 py-0.5 rounded text-[10px] ml-1 font-semibold">${localResult.concept}</span></div></div>`;
+      const htmlOutput = `<div class="space-y-4">
+        <p class="font-bold text-xs uppercase tracking-wide" style="color:var(--accent)">LOCAL AI SOLVER NODE Fallback</p>
+        <div class="space-y-1">
+          <h5 class="text-[10px] font-bold uppercase tracking-wider text-text-secondary">1. Problem Understanding</h5>
+          <p class="text-xs text-text-primary leading-relaxed">${localResult.overview}</p>
+        </div>
+        <div class="space-y-1">
+          <h5 class="text-[10px] font-bold uppercase tracking-wider text-text-secondary">2. Formula Used</h5>
+          <div class="p-3 border border-border-custom bg-background-secondary rounded-lg">
+            <code class="font-mono text-xs text-text-primary">${localResult.formula}</code>
+          </div>
+        </div>
+        <div class="space-y-1">
+          <h5 class="text-[10px] font-bold uppercase tracking-wider text-text-secondary">3. Step-by-Step Solution</h5>
+          <ol class="list-decimal pl-4 space-y-1 text-xs text-text-secondary">
+            ${localResult.steps.map(s => `<li><strong>${s.title}</strong>: ${s.body}</li>`).join('')}
+          </ol>
+        </div>
+        <div class="pt-2 border-t border-border-custom text-xs">
+          <span class="font-semibold text-text-secondary block mb-0.5">4. Final Answer</span>
+          <span class="text-text-primary font-bold">${localResult.final}</span>
+        </div>
+        <div class="pt-2 border-t border-border-custom text-xs">
+          <span class="font-semibold text-text-secondary block mb-0.5">5. Alternative Method</span>
+          <p class="text-text-primary leading-relaxed">${localResult.alternative}</p>
+        </div>
+        <div class="pt-2 border-t border-border-custom text-xs">
+          <span class="font-semibold text-text-secondary block mb-0.5">6. Key Concept</span>
+          <span class="inline-block bg-background-secondary px-2 py-0.5 rounded text-[10px] font-semibold">${localResult.concept}</span>
+        </div>
+      </div>`;
       setTimeout(() => {
         setMessages(prev => [...prev, { id: `bot-${Date.now()}`, role: 'bot', content: htmlOutput, rawQuery: queryText }]);
         setCurrentSolutionHtml(htmlOutput);
@@ -637,7 +724,7 @@ const ChatWorkspace = () => {
       `}>
         {/* Brand */}
         <div className="p-4 border-b border-border-custom flex items-center justify-between">
-          <div className="flex items-center space-x-2 overflow-hidden">
+          <div className={`flex items-center ${sidebarCollapsed ? 'justify-center w-full' : 'space-x-2 overflow-hidden'}`}>
             <div className="w-8 h-8 rounded flex items-center justify-center font-bold text-sm flex-shrink-0" style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}>
               M
             </div>
@@ -645,13 +732,24 @@ const ChatWorkspace = () => {
               <span className="font-display font-bold text-base tracking-tight text-text-primary whitespace-nowrap">MatAI Workspace</span>
             )}
           </div>
-          <button 
-            onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-            className="p-1 rounded hover:bg-background-primary text-text-secondary hover:text-text-primary transition-all cursor-pointer"
-            title={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-          >
-            <ChevronRight size={14} className={`transform transition-transform duration-300 ${sidebarCollapsed ? '' : 'rotate-180'}`} />
-          </button>
+          {!sidebarCollapsed && (
+            <button 
+              onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+              className="p-1 rounded hover:bg-background-primary text-text-secondary hover:text-text-primary transition-all cursor-pointer"
+              title={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+            >
+              <ChevronRight size={14} className={`transform transition-transform duration-300 ${sidebarCollapsed ? '' : 'rotate-180'}`} />
+            </button>
+          )}
+          {sidebarCollapsed && (
+            <button 
+              onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+              className="p-1 rounded hover:bg-background-primary text-text-secondary hover:text-text-primary transition-all cursor-pointer absolute right-2"
+              title="Expand sidebar"
+            >
+              <ChevronRight size={14} className="transform transition-transform duration-300" />
+            </button>
+          )}
         </div>
 
         {/* Navigation */}
@@ -671,16 +769,37 @@ const ChatWorkspace = () => {
                       setActiveView(item.label);
                     }
                   }}
-                  className={`w-full flex items-center px-3 py-2 rounded-lg text-xs font-semibold tracking-wide transition-all cursor-pointer ${
+                  className={`w-full flex items-center px-3 py-2 text-xs font-semibold tracking-wide transition-all cursor-pointer ${
+                    item.isAction 
+                      ? 'rounded-xl border border-border-custom/30' 
+                      : 'rounded-lg'
+                  } ${
                     isActive 
                       ? 'bg-background-primary border border-border-custom text-text-primary font-bold shadow-xs' 
-                      : 'text-text-secondary hover:text-text-primary hover:bg-background-primary/50'
+                      : item.isAction 
+                        ? '' 
+                        : 'text-text-secondary hover:text-text-primary hover:bg-background-primary/50'
                   } ${sidebarCollapsed ? 'justify-center' : 'space-x-3'}`}
                   title={t(item.label)}
-                  style={isActive ? { color: 'var(--accent)' } : {}}
+                  style={
+                    item.isAction 
+                      ? { backgroundColor: 'var(--accent-light)', borderColor: 'var(--accent)/30' } 
+                      : isActive 
+                        ? { color: 'var(--accent)' } 
+                        : {}
+                  }
                 >
-                  <Icon size={14} style={isActive ? { color: 'var(--accent)' } : {}} />
-                  {!sidebarCollapsed && <span>{t(item.label)}</span>}
+                  <Icon 
+                    size={14} 
+                    style={
+                      item.isAction 
+                        ? { color: 'var(--accent)' } 
+                        : isActive 
+                          ? { color: 'var(--accent)' } 
+                          : {}
+                    } 
+                  />
+                  {!sidebarCollapsed && <span style={item.isAction ? { color: 'var(--accent)' } : {}}>{t(item.label)}</span>}
                 </button>
               );
             })}
@@ -896,22 +1015,7 @@ const ChatWorkspace = () => {
           )}
         </nav>
 
-        {/* Bottom stats */}
-        <div className="p-3 border-t border-border-custom space-y-3 bg-background-primary/40">
-          {!sidebarCollapsed ? (
-            <div className="border border-border-custom bg-background-primary p-3 rounded-xl space-y-1.5 font-mono text-[10px]">
-              <div className="flex justify-between items-center text-text-secondary"><span>{t('rank')}:</span><span className="font-bold text-text-primary">{rank}</span></div>
-              <div className="flex justify-between items-center text-text-secondary"><span>{t('level')}:</span><span className="font-bold text-text-primary">{level}</span></div>
-              <div className="flex justify-between items-center text-text-secondary"><span>XP:</span><span className="font-bold text-text-primary">{xp}</span></div>
-              <div className="flex justify-between items-center text-text-secondary"><span>{t('streak')}:</span><span className="font-bold text-text-primary flex items-center space-x-0.5"><Flame size={11} className="fill-orange-400 text-orange-400" /><span>{streak} days</span></span></div>
-            </div>
-          ) : (
-            <div className="flex flex-col items-center space-y-3">
-              <div className="w-8 h-8 rounded-full border border-border-custom bg-background-primary flex items-center justify-center text-[10px] font-bold text-text-primary">L{level}</div>
-              <div className="flex items-center text-orange-400 text-xs font-bold font-mono"><Flame size={14} className="fill-orange-400" /><span>{streak}d</span></div>
-            </div>
-          )}
-        </div>
+
       </aside>
 
       {/* COLUMN 2: MAIN VIEW WORKSPACE */}
@@ -1216,7 +1320,7 @@ const ChatWorkspace = () => {
                             </div>
                             {msg.role === 'bot' && msg.id !== 'welcome' ? (
                               <div className="text-sm leading-relaxed">
-                                <div dangerouslySetInnerHTML={{ __html: msg.content }}></div>
+                                <div dangerouslySetInnerHTML={{ __html: renderWithLatex(msg.content) }}></div>
                                 <button
                                   onClick={() => addBookmarkItem('solution', `Solution: ${msg.rawQuery}`, msg.rawQuery)}
                                   className="mt-3 text-xs text-text-secondary hover:text-[var(--accent)] flex items-center gap-1 cursor-pointer"
@@ -1226,7 +1330,7 @@ const ChatWorkspace = () => {
                                 </button>
                               </div>
                             ) : (
-                              <div className="text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: msg.content }}></div>
+                              <div className="text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: renderWithLatex(msg.content) }}></div>
                             )}
                           </div>
                         </motion.div>
@@ -1711,7 +1815,7 @@ const ChatWorkspace = () => {
         <section className="hidden md:flex md:flex-col md:w-96 md:h-screen md:flex-shrink-0 md:bg-background-secondary md:select-none">
           {/* Desktop Right Panel Header */}
           <header className="p-3 border-b border-border-custom flex space-x-1.5 justify-between bg-background-primary">
-            {['solution', 'video', 'visualization', 'notes'].map((tab) => (
+            {['solution', 'video', 'visualization'].map((tab) => (
               <button key={tab} onClick={() => setActiveOutputTab(tab)}
                 className={`flex-1 text-center py-1.5 rounded-md text-[10px] font-bold uppercase transition-all tracking-wider cursor-pointer ${activeOutputTab === tab ? 'shadow-xs' : 'text-text-secondary hover:text-text-primary hover:bg-background-secondary'}`}
                 style={activeOutputTab === tab ? { backgroundColor: 'var(--accent)', color: 'var(--accent-text)' } : {}}
@@ -1724,7 +1828,7 @@ const ChatWorkspace = () => {
               <div className="space-y-4 animate-fade-in">
                 <div className="flex items-center space-x-2 border-b border-border-custom pb-2"><BookOpen size={14} className="text-text-secondary" /><span className="font-bold text-xs uppercase tracking-wide">{t('solutionSummary')}</span></div>
                 {currentSolutionHtml ? (
-                  <div className="bg-background-primary border border-border-custom p-4 rounded-xl text-xs leading-relaxed font-mono overflow-x-auto" dangerouslySetInnerHTML={{ __html: currentSolutionHtml }}></div>
+                  <div className="bg-background-primary border border-border-custom p-4 rounded-xl text-xs leading-relaxed font-mono overflow-x-auto" dangerouslySetInnerHTML={{ __html: renderWithLatex(currentSolutionHtml) }}></div>
                 ) : (
                   <div className="text-center py-8 text-text-secondary text-xs">{t('noSolution')}</div>
                 )}
@@ -1782,21 +1886,20 @@ const ChatWorkspace = () => {
                     <button onClick={() => addBookmarkItem('graph', `Graph: ${currentQuery}`, currentQuery)} className="text-[10px] font-mono text-text-secondary hover:text-text-primary flex items-center space-x-1 hover:underline cursor-pointer"><Bookmark size={11} /><span>Save Graph</span></button>
                   </div>
                 ) : (
-                  <div className="text-center py-8 text-text-secondary text-xs">{t('noGraph')}</div>
+                  <div className="flex flex-col items-center justify-center py-12 space-y-4">
+                    <div className="w-16 h-16 rounded-full bg-background-primary border border-border-custom flex items-center justify-center">
+                      <Layers size={28} className="text-text-secondary" />
+                    </div>
+                    <div className="text-center space-y-2">
+                      <p className="text-sm font-semibold text-text-primary">No visualization available</p>
+                      <p className="text-xs text-text-secondary">Submit a mathematical function or graph-related query.</p>
+                    </div>
+                  </div>
                 )}
               </div>
             )}
 
-            {/* Notes tab */}
-            {activeOutputTab === 'notes' && (
-              <div className="space-y-4 animate-fade-in">
-                <div className="flex items-center space-x-2 border-b border-border-custom pb-2"><Bookmark size={14} className="text-text-secondary" /><span className="font-bold text-xs uppercase tracking-wide">{t('notes')}</span></div>
-                <div className="space-y-2">
-                  <div className="p-3 border border-border-custom rounded-xl bg-background-primary leading-normal text-xs text-text-secondary space-y-1"><div className="font-bold text-[10px] font-mono text-text-primary uppercase">{t('calculus')} Note</div><p>Polynomial tangent slopes indicate speed. Tangents are positive where slope is ascending, negative where descending, and zero at local extrema.</p></div>
-                  <div className="p-3 border border-border-custom rounded-xl bg-background-primary leading-normal text-xs text-text-secondary space-y-1"><div className="font-bold text-[10px] font-mono text-text-primary uppercase">KaTeX Syntax</div><p>Always write vectors as \vec v and integral formulas with limits to guarantee alignment validation.</p></div>
-                </div>
-              </div>
-            )}
+
           </div>
         </section>
 
@@ -1816,7 +1919,7 @@ const ChatWorkspace = () => {
               >
                 <X size={18} />
               </button>
-              {['solution', 'video', 'visualization', 'notes'].map((tab) => (
+              {['solution', 'video', 'visualization'].map((tab) => (
                 <button key={tab} onClick={() => setActiveOutputTab(tab)}
                   className={`flex-1 text-center py-1.5 rounded-md text-[10px] font-bold uppercase transition-all tracking-wider cursor-pointer ${activeOutputTab === tab ? 'shadow-xs' : 'text-text-secondary hover:text-text-primary hover:bg-background-secondary'}`}
                   style={activeOutputTab === tab ? { backgroundColor: 'var(--accent)', color: 'var(--accent-text)' } : {}}
@@ -1830,7 +1933,7 @@ const ChatWorkspace = () => {
                 <div className="space-y-4 animate-fade-in">
                   <div className="flex items-center space-x-2 border-b border-border-custom pb-2"><BookOpen size={14} className="text-text-secondary" /><span className="font-bold text-xs uppercase tracking-wide">{t('solutionSummary')}</span></div>
                   {currentSolutionHtml ? (
-                    <div className="bg-background-primary border border-border-custom p-4 rounded-xl text-xs leading-relaxed font-mono overflow-x-auto" dangerouslySetInnerHTML={{ __html: currentSolutionHtml }}></div>
+                    <div className="bg-background-primary border border-border-custom p-4 rounded-xl text-xs leading-relaxed font-mono overflow-x-auto" dangerouslySetInnerHTML={{ __html: renderWithLatex(currentSolutionHtml) }}></div>
                   ) : (
                     <div className="text-center py-8 text-text-secondary text-xs">{t('noSolution')}</div>
                   )}
@@ -1888,7 +1991,15 @@ const ChatWorkspace = () => {
                       <button onClick={() => addBookmarkItem('graph', `Graph: ${currentQuery}`, currentQuery)} className="text-[10px] font-mono text-text-secondary hover:text-text-primary flex items-center space-x-1 hover:underline cursor-pointer"><Bookmark size={11} /><span>Save Graph</span></button>
                     </div>
                   ) : (
-                    <div className="text-center py-8 text-text-secondary text-xs">{t('noGraph')}</div>
+                    <div className="flex flex-col items-center justify-center py-12 space-y-4">
+                    <div className="w-16 h-16 rounded-full bg-background-primary border border-border-custom flex items-center justify-center">
+                      <Layers size={28} className="text-text-secondary" />
+                    </div>
+                    <div className="text-center space-y-2">
+                      <p className="text-sm font-semibold text-text-primary">No visualization available</p>
+                      <p className="text-xs text-text-secondary">Submit a mathematical function or graph-related query.</p>
+                    </div>
+                  </div>
                   )}
                 </div>
               )}

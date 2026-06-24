@@ -1,17 +1,23 @@
 import os
+from dotenv import load_dotenv
+
+# Load environment variables before importing custom modules that depend on them
+base_dir = os.path.abspath(os.path.dirname(__file__))
+load_dotenv(os.path.join(base_dir, '.env'))
+
 import subprocess
 from flask import Flask, redirect, url_for, session, render_template, jsonify, request, send_from_directory
 from authlib.integrations.flask_client import OAuth
 import pymongo
-from dotenv import load_dotenv
-import os
 from Agents import AgentManager
 import smtplib
 from email.message import EmailMessage
 
-load_dotenv()
-
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    template_folder=os.path.join(base_dir, 'templates'),
+    static_folder=os.path.join(base_dir, 'static')
+)
 app.secret_key = os.getenv("FLASK_SECRET_KEY")
 
 # 🔐 Session config
@@ -49,7 +55,8 @@ def auth_session():
 @app.route('/video')
 def home():
     try:
-        return send_from_directory('static/dist', 'index.html')
+        dist_dir = os.path.join(app.static_folder, 'dist')
+        return send_from_directory(dist_dir, 'index.html')
     except Exception:
         return render_template('Home.html')
 
