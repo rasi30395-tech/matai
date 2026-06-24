@@ -717,7 +717,7 @@ const ChatWorkspace = () => {
       </AnimatePresence>
 
       {/* COLUMN 1: LEFT SIDEBAR */}
-      <aside className={`border-r border-border-custom bg-background-secondary flex flex-col h-screen flex-shrink-0 select-none transition-all duration-300 z-50
+      <aside className={`border-r border-border-custom bg-background-secondary flex flex-col h-screen flex-shrink-0 select-none transition-all duration-150 z-50
         md:static md:translate-x-0
         ${mobileSidebarOpen ? 'translate-x-0 fixed left-0 top-0' : '-translate-x-full fixed left-0 top-0'}
         ${sidebarCollapsed ? 'w-16' : 'w-64'}
@@ -735,19 +735,19 @@ const ChatWorkspace = () => {
           {!sidebarCollapsed && (
             <button 
               onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-              className="p-1 rounded hover:bg-background-primary text-text-secondary hover:text-text-primary transition-all cursor-pointer"
+              className="p-1 rounded hover:bg-background-primary text-text-secondary hover:text-text-primary transition-all duration-150 cursor-pointer"
               title={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
             >
-              <ChevronRight size={14} className={`transform transition-transform duration-300 ${sidebarCollapsed ? '' : 'rotate-180'}`} />
+              <ChevronRight size={14} className={`transform transition-transform duration-150 ${sidebarCollapsed ? '' : 'rotate-180'}`} />
             </button>
           )}
           {sidebarCollapsed && (
             <button 
               onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-              className="p-1 rounded hover:bg-background-primary text-text-secondary hover:text-text-primary transition-all cursor-pointer absolute right-2"
+              className="p-1 rounded hover:bg-background-primary text-text-secondary hover:text-text-primary transition-all duration-150 cursor-pointer absolute right-2"
               title="Expand sidebar"
             >
-              <ChevronRight size={14} className="transform transition-transform duration-300" />
+              <ChevronRight size={14} className="transform transition-transform duration-150" />
             </button>
           )}
         </div>
@@ -759,48 +759,55 @@ const ChatWorkspace = () => {
               const Icon = item.icon;
               const isActive = activeView === t(item.label).toLowerCase();
               return (
-                <button
-                  key={idx}
-                  onClick={() => {
-                    if (item.isAction) {
-                      setActiveView('chat');
-                      setMessages([{ id: 'welcome', role: 'bot', content: "<p>New conversation started. Submit any mathematical problem below.</p>" }]);
-                    } else {
-                      setActiveView(item.label);
-                    }
-                  }}
-                  className={`w-full flex items-center px-3 py-2 text-xs font-semibold tracking-wide transition-all cursor-pointer ${
-                    item.isAction 
-                      ? 'rounded-xl border border-border-custom/30' 
-                      : 'rounded-lg'
-                  } ${
-                    isActive 
-                      ? 'bg-background-primary border border-border-custom text-text-primary font-bold shadow-xs' 
-                      : item.isAction 
-                        ? '' 
-                        : 'text-text-secondary hover:text-text-primary hover:bg-background-primary/50'
-                  } ${sidebarCollapsed ? 'justify-center' : 'space-x-3'}`}
-                  title={t(item.label)}
-                  style={
-                    item.isAction 
-                      ? { backgroundColor: 'var(--accent-light)', borderColor: 'var(--accent)/30' } 
-                      : isActive 
-                        ? { color: 'var(--accent)' } 
-                        : {}
-                  }
-                >
-                  <Icon 
-                    size={14} 
+                <div className="relative w-full group">
+                  <button
+                    key={idx}
+                    onClick={() => {
+                      if (item.isAction) {
+                        setActiveView('chat');
+                        setMessages([{ id: 'welcome', role: 'bot', content: "<p>New conversation started. Submit any mathematical problem below.</p>" }]);
+                      } else {
+                        setActiveView(item.label);
+                      }
+                    }}
+                    className={`w-full flex items-center px-3 py-2 text-xs font-semibold tracking-wide transition-all duration-150 cursor-pointer ${
+                      item.isAction 
+                        ? 'rounded-xl border border-border-custom/30' 
+                        : 'rounded-lg'
+                    } ${
+                      isActive 
+                        ? 'bg-background-primary border border-border-custom text-text-primary font-bold shadow-xs' 
+                        : item.isAction 
+                          ? '' 
+                          : 'text-text-secondary hover:text-text-primary hover:bg-background-primary/50'
+                    } ${sidebarCollapsed ? 'justify-center' : 'space-x-3'}`}
+                    title={t(item.label)}
                     style={
                       item.isAction 
-                        ? { color: 'var(--accent)' } 
+                        ? { backgroundColor: 'var(--accent-light)', borderColor: 'var(--accent)/30' } 
                         : isActive 
                           ? { color: 'var(--accent)' } 
                           : {}
-                    } 
-                  />
-                  {!sidebarCollapsed && <span style={item.isAction ? { color: 'var(--accent)' } : {}}>{t(item.label)}</span>}
-                </button>
+                    }
+                  >
+                    <Icon 
+                      size={14} 
+                      style={
+                        item.isAction 
+                          ? { color: 'var(--accent)' } 
+                          : isActive 
+                            ? { color: 'var(--accent)' } 
+                            : {}
+                      } 
+                    />
+                    {!sidebarCollapsed && <span style={item.isAction ? { color: 'var(--accent)' } : {}}>{t(item.label)}</span>}
+                  </button>
+                  {sidebarCollapsed && (
+                    <div className="absolute left-14 top-1/2 -translate-y-1/2 z-50 bg-background-primary border border-border-custom px-3 py-1.5 rounded-lg shadow-lg text-xs font-semibold text-text-primary whitespace-nowrap opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-100 pointer-events-none">
+                      {t(item.label)}
+                    </div>
+                  )}
+                </div>
               );
             })}
           </div>
